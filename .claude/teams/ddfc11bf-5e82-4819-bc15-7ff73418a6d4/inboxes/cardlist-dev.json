@@ -1,0 +1,8 @@
+[
+  {
+    "from": "team-lead",
+    "text": "{\"type\":\"task_assignment\",\"taskId\":\"4\",\"subject\":\"Implement CardList widget\",\"description\":\"Implement responsive CardList widget. Shows 3 card products: Халва, Дебетовая с кэшбэком за всё, Дебетовая с кэшбэком в категориях. Each card has: image, title, features, \\\"Оформить карту\\\" button. Desktop: horizontal layout. Mobile: stacked. \\\"Показать ещё\\\" button at bottom.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-22T11:27:11.584Z\"}",
+    "timestamp": "2026-03-22T11:27:11.584Z",
+    "read": false
+  }
+]

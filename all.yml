@@ -1,0 +1,10 @@
+---
+- name: Install AI configuration
+  hosts: local
+  gather_facts: true
+  roles:
+    - role: claude
+      tags: claude
+    - role: ai
+      when: ai_rag_enabled | default(true) | bool
+      tags: ai

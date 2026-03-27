@@ -1,0 +1,30 @@
+# Claude Code runtime artifacts
+.claude/settings.local.json
+.claude/backups/
+.claude/cache/
+.claude/chrome/
+.claude/debug/
+.claude/downloads/
+.claude/file-history/
+.claude/ide/
+.claude/image-cache/
+.claude/paste-cache/
+.claude/plans/
+.claude/projects/
+.claude/sessions/
+.claude/shell-snapshots/
+.claude/telemetry/
+.claude/todos/
+.claude/history.jsonl
+.claude/stats-cache.json
+
+# OS
+.DS_Store
+
+# Ansible
+*.retry
+
+# IDE
+.idea/
+.vscode/
+.claude/plugins/marketplaces/

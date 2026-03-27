@@ -1,0 +1,8 @@
+[
+  {
+    "from": "team-lead",
+    "text": "{\"type\":\"task_assignment\",\"taskId\":\"5\",\"subject\":\"Implement HowTo + Footer widget\",\"description\":\"Implement responsive HowTo widget. Title \\\"Как получить карту\\\". 3 steps with numbered badges: 1. Заполните заявку, 2. Дождитесь подтверждения, 3. Получите карту. Desktop: 3 cols. Tablet/Mobile: stacked. Plus Footer with copyright text.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-22T11:27:11.584Z\"}",
+    "timestamp": "2026-03-22T11:27:11.584Z",
+    "read": false
+  }
+]

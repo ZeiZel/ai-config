@@ -1,0 +1,12 @@
+---
+# Common variables for AI config
+dotfiles_user: "{{ ansible_facts['user_id'] }}"
+dotfiles_home: "{{ ansible_facts['env']['HOME'] }}"
+ai_config_dir: "{{ playbook_dir }}"
+config_dir: "{{ dotfiles_home }}/.config"
+
+# Used by roles/claude for symlink target
+configs_path: "{{ ai_config_dir }}"
+
+# AI RAG system (enabled by default in this repo)
+ai_rag_enabled: true
