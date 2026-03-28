@@ -153,9 +153,7 @@
       vars:
         open_pencil_mcp_config:
           type: stdio
-          command: "{{ dotfiles_home }}/.bun/bin/bunx"
-          args:
-            - openpencil-mcp
+          command: "{{ dotfiles_home }}/.bun/bin/openpencil-mcp"
       when: open_pencil_enabled
       register: open_pencil_mcp_add
       changed_when: open_pencil_mcp_add.rc == 0
