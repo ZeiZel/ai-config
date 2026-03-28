@@ -464,7 +464,7 @@
       "source": {
         "source": "url",
         "url": "https://github.com/tryflint/claude-code-plugin.git",
-        "sha": "8f57ef474f59817c7e5930dd6c295232d43c3711"
+        "sha": "f3d56e33ed2fb3ed9b4f02e0fc65d0a79b24bf4d"
       },
       "homepage": "https://www.tryflint.com/docs/claude-code-plugin"
     },

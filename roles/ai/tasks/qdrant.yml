@@ -76,4 +76,4 @@
     body_format: json
     body: "{{ lookup('template', 'qdrant-collection.json.j2') | from_json }}"
     status_code: [200]
-  when: qdrant_collection_check.status == 404
+  when: qdrant_collection_check.status is defined and qdrant_collection_check.status == 404
