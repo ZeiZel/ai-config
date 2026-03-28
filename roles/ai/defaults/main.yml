@@ -43,8 +43,10 @@ context7_mcp_url: "https://mcp.context7.com/mcp"
 
 # Mem0 - structured agent memory (episodic/semantic/procedural)
 # 26% accuracy boost over flat vector search
+# Package: mem0-mcp-server (PyPI) — requires MEM0_API_KEY from https://app.mem0.ai
+# Alternative: OpenMemory (self-hosted) — see mem0ai/mem0/openmemory
 mem0_enabled: true
-mem0_package: "mem0ai"
+mem0_package: "mem0-mcp-server"
 mem0_data_dir: "{{ dotfiles_home }}/.local/share/mem0"
 
 # OpenPencil - open-source Figma alternative with AI MCP

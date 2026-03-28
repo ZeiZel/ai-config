@@ -36,7 +36,7 @@
 # Mem0 - structured agent memory
 - name: MCP Servers | Pre-cache Mem0 MCP via uvx
   ansible.builtin.command:
-    cmd: "{{ uvx_bin }} --from mem0-mcp mem0-mcp --help"
+    cmd: "{{ uvx_bin }} --from {{ mem0_package }} mem0-mcp-server --help"
   register: mem0_mcp_install
   changed_when: false
   failed_when: false

@@ -1,0 +1,129 @@
+---
+# Quality gates for workflow templates
+# Referenced by team-lead and spec-validator during quality assessment
+
+gates:
+  planning:
+    threshold: 95
+    description: "Requirements completeness and architecture soundness"
+    validators:
+      - requirements_coverage
+      - architecture_completeness
+      - domain_model_consistency
+    checks:
+      - "All user stories have acceptance criteria"
+      - "Architecture addresses all non-functional requirements"
+      - "Domain boundaries are clearly defined"
+      - "API contracts are specified"
+
+  development:
+    threshold: 85
+    description: "Code quality, test coverage, and security"
+    validators:
+      - code_coverage
+      - linting
+      - security_scan
+      - type_checking
+    checks:
+      - "Code compiles/passes linting"
+      - "Test coverage >= threshold"
+      - "No hardcoded secrets or debug code"
+      - "Error handling is present"
+      - "Imports are clean (no unused)"
+      - "Code follows project patterns"
+
+  review:
+    threshold: 90
+    description: "Code review quality criteria"
+    validators:
+      - security_review
+      - performance_review
+      - maintainability_review
+    checks:
+      - "No N+1 query patterns"
+      - "No SQL injection vectors"
+      - "No XSS vulnerabilities"
+      - "Error messages don't leak internals"
+      - "Proper input validation at boundaries"
+      - "No unnecessary complexity"
+
+  testing:
+    threshold: 90
+    description: "Test quality and coverage"
+    validators:
+      - unit_test_coverage
+      - integration_test_coverage
+      - edge_case_coverage
+    checks:
+      - "Happy path tested"
+      - "At least 2 error cases per function"
+      - "Edge cases covered (null, empty, boundary)"
+      - "Proper mocking strategy (no over-mocking)"
+      - "Tests are independent and deterministic"
+
+  validation:
+    threshold: 95
+    description: "Final quality check before completion"
+    validators:
+      - all_tests_pass
+      - documentation_complete
+      - requirements_met
+      - no_regressions
+    checks:
+      - "All acceptance criteria met"
+      - "All tests pass"
+      - "Documentation updated"
+      - "No regressions in existing functionality"
+      - "Architecture decisions documented"
+
+# Workflow template quality targets
+workflow_quality:
+  feature:
+    gates: [planning, development, review, testing, validation]
+    overall_threshold: 95
+    max_iterations: 3
+  bugfix:
+    gates: [development, review, testing]
+    overall_threshold: 90
+    max_iterations: 2
+  hotfix:
+    gates: [development, testing]
+    overall_threshold: 85
+    max_iterations: 1
+  refactor:
+    gates: [development, review, testing, validation]
+    overall_threshold: 95
+    max_iterations: 3
+  docs:
+    gates: [review]
+    overall_threshold: 90
+    max_iterations: 2
+  prototype:
+    gates: [development]
+    overall_threshold: 75
+    max_iterations: 1
+
+# Agent self-review checklist (mandatory before DONE)
+pre_done_checklist:
+  spec-developer:
+    - "Code compiles/passes linting"
+    - "All acceptance criteria from task addressed"
+    - "Tests cover happy path + 2 error cases minimum"
+    - "No hardcoded values, secrets, or debug code"
+    - "Imports are clean (no unused)"
+    - "Error handling is present"
+    - "Code follows project patterns (check via RAG)"
+
+  spec-reviewer:
+    - "Security vulnerabilities checked (OWASP top 5)"
+    - "Performance anti-patterns checked (N+1, unbounded queries)"
+    - "Error handling reviewed"
+    - "Input validation at system boundaries verified"
+    - "Code readability and maintainability assessed"
+
+  spec-tester:
+    - "Unit tests for all public functions"
+    - "Integration tests for API endpoints"
+    - "Edge cases covered"
+    - "Proper assertions (not just no-error checks)"
+    - "Test isolation verified (no shared state)"

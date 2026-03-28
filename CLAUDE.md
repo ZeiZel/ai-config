@@ -5,9 +5,14 @@ Ansible-based AI development environment: Claude Code agents, MCP servers, RAG i
 ## Quick Reference
 
 - **Constitution**: `docs/Constitution.md` — mandatory rules for ALL agents
+- **Architecture**: `docs/architecture/overview.md` — system architecture spec
+- **Requirements**: `docs/requirements.md` — functional & non-functional requirements
+- **Tech Stack**: `docs/tech-stack.md` — technology documentation
+- **Quality Gates**: `docs/quality-gates.yaml` — workflow quality thresholds
 - **Optimization Plan**: `docs/ai-optimization-plan.md` — current improvement roadmap
-- **Agents**: `.claude/agents/` — agent specifications
-- **Skills**: `.claude/skills/` — reusable skill definitions
+- **Project Config**: `docs/project.yaml` — full project configuration
+- **Agents**: `.claude/agents/` — 60+ agent specifications
+- **Skills**: `.claude/skills/` — 25+ reusable skill definitions
 - **AI Infrastructure**: `roles/ai/` — Ansible role for Qdrant, MCP servers
 
 ## Installation
@@ -59,9 +64,9 @@ docker start qdrant                                  # Start if stopped
 
 ## Agent Model Routing
 
-- **opus**: team-lead, spec-architect, spec-reviewer, security-architect
-- **sonnet**: spec-developer, spec-tester, spec-planner, spec-analyst, spec-validator
-- **haiku**: changelog-keeper, boilerplate-generator, regex-helper
+- **opus**: team-lead, spec-analyst, spec-architect, spec-planner, agile-master (planning/specs/architecture)
+- **sonnet**: spec-developer, spec-tester, spec-reviewer, spec-validator, senior-frontend/backend/devops-architect, security-architect (code/execution)
+- **haiku**: changelog-keeper, boilerplate-generator, regex-helper, readme-generator (mechanical)
 
 ## Compaction Rules
 

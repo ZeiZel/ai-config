@@ -123,7 +123,9 @@
           type: stdio
           command: "{{ uvx_bin }}"
           args:
-            - mem0-mcp
+            - "--from"
+            - "{{ mem0_package }}"
+            - mem0-mcp-server
       when: mem0_enabled
       register: mem0_mcp_add
       changed_when: mem0_mcp_add.rc == 0

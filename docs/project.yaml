@@ -1,6 +1,15 @@
 ---
-name: dotfiles
-description: Ansible-based macOS/Linux developer environment provisioning with multi-agent AI system
+version: "2.0"
+
+project:
+  name: ai-config
+  description: >
+    Ansible-managed multi-agent AI development environment for Claude Code.
+    Deploys 60+ agents, 25+ skills, MCP servers, RAG infrastructure (Qdrant),
+    design tools (OpenPencil), task management (Beads), and orchestration (Gastown)
+    globally via ~/.claude symlink.
+  type: infrastructure
+  repository: https://github.com/ZeiZel/ai-config
 
 tech_stack:
   provisioning: ansible
@@ -9,15 +18,100 @@ tech_stack:
   editor: neovim
   package_manager: homebrew
   dotfiles_manager: stow
+  container_runtime: docker
+  python_tooling: uv
+  js_runtime: bun
   ai_tools:
     - claude-code
     - aider
     - repomix
+    - beads
+    - gastown
+    - ccusage
+
+infrastructure:
+  qdrant:
+    image: "qdrant/qdrant:v1.13.2"
+    port_rest: 6333
+    port_grpc: 6334
+    memory_limit: "1g"
+    restart_policy: "unless-stopped"
+    binding: "127.0.0.1"
+    collection:
+      name: codebase
+      vector_size: 384
+      distance: cosine
+      quantization: int8
+      hybrid_search: true  # BM25 sparse vectors
+  mcp_servers:
+    - name: qdrant-mcp
+      scope: user
+      transport: stdio
+      package: mcp-server-qdrant
+      runner: uvx
+    - name: code-index-mcp
+      scope: user
+      transport: stdio
+      package: code-index-mcp
+      runner: uvx
+    - name: context7
+      scope: user
+      transport: http
+      url: https://mcp.context7.com/mcp
+    - name: mem0
+      scope: user
+      transport: stdio
+      package: mem0-mcp
+      runner: uvx
+    - name: open-pencil
+      scope: user
+      transport: stdio
+      package: "@open-pencil/mcp"
+      runner: npx
+
+agents:
+  total_count: 60
+  categories:
+    spec-agents: 8
+    frontend: 5
+    backend: 1
+    devops: 3
+    security: 2
+    data: 2
+    documentation: 5
+    research: 4
+    orchestration: 3
+    dev-tools: 6
+    everyday: 5
+    domain: 3
+    ui-ux: 2
+    mobile: 1
+    ai: 1
+    product: 2
+    quality: 1
+    architecture: 1
+    analysis: 1
+    utility: 2
+
+skills:
+  total_count: 25
+  categories:
+    development: [teamlead, implement, debug, refactor, test, commit]
+    quality: [pr-review, security-audit, audit, simplify]
+    research: [research, design, decide, docs, learn]
+    project: [project-setup, onboard, changelog, readme, migrate]
+    domain: [backend-dev, devops, ai-product-dev, analytics, system-design]
+    agent-system: [agent-creator, agent-workflow, directives, update-ai, find-skills]
+    internal: [beads-tasks, gastown-orchestrate, rag-context, repomix-snapshot, team-comms, code-search]
 
 context:
   strategy: auto  # auto | repomix | rag
   threshold_tokens: 700000
   snapshot_path: docs/context/codebase-snapshot.txt
+  layers:
+    always: 5000  # tokens: project overview, architecture, standards
+    task_specific: 40000  # tokens: relevant module code, tests, APIs
+    on_demand: unlimited  # lazy: RAG self-service
 
 quality:
   target_score: 95
@@ -56,19 +150,19 @@ orchestration:
 model_routing:
   opus:
     - team-lead
+    - spec-analyst
     - spec-architect
+    - spec-planner
+    - agile-master
+  sonnet:
+    - spec-developer
+    - spec-tester
     - spec-reviewer
+    - spec-validator
     - security-architect
     - senior-backend-architect
     - senior-frontend-architect
     - senior-devops-architect
-  sonnet:
-    - spec-developer
-    - spec-tester
-    - spec-planner
-    - spec-analyst
-    - spec-validator
-    - agile-master
     - front-lead
     - react-developer
     - angular-frontend-engineer
@@ -105,7 +199,6 @@ model_routing:
     - sql-optimizer
     - ui-ux-master
     - product-manager
-    - devops-troubleshooter
   haiku:
     - changelog-keeper
     - boilerplate-generator
@@ -138,3 +231,11 @@ rag:
   embedding_model: paraphrase-multilingual-MiniLM-L12-v2
   embedding_dim: 384
   qdrant_port: 6333
+
+hooks:
+  session_start: "bd prime"
+  pre_compact: "bd prime"
+  post_write: "auto-lint (eslint/ruff)"
+  pre_bash: "safety guard (rm -rf, force-push)"
+  notification: "OS notification"
+  stop: "TTS + session logging"
