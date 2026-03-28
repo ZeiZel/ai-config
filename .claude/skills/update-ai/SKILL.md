@@ -336,6 +336,170 @@ With `--apply` flag, automatically implement safe improvements:
 - Infrastructure changes
 - New MCP server installation
 
+## Phase 6: Agent Evolution & Maintenance
+
+### Framework Version Tracking
+
+Check for new major versions of frameworks that agents support. When new versions are detected, propose agent spec updates.
+
+```bash
+# Check latest versions of key frameworks
+echo "=== Frontend Frameworks ==="
+npm view react version 2>/dev/null
+npm view next version 2>/dev/null
+npm view vue version 2>/dev/null
+npm view @angular/core version 2>/dev/null
+npm view svelte version 2>/dev/null
+npm view @sveltejs/kit version 2>/dev/null
+npm view astro version 2>/dev/null
+
+echo "=== Backend Frameworks ==="
+# Go: check go.dev for latest
+curl -sL "https://go.dev/VERSION?m=text" 2>/dev/null | head -1
+npm view @nestjs/core version 2>/dev/null
+npm view fastify version 2>/dev/null
+npm view hono version 2>/dev/null
+npm view elysia version 2>/dev/null
+
+echo "=== UI Libraries ==="
+npm view @mui/material version 2>/dev/null
+npm view antd version 2>/dev/null
+npm view @mantine/core version 2>/dev/null
+```
+
+**For each outdated agent spec:**
+1. Compare agent's documented patterns with latest framework docs
+2. Identify deprecated APIs, new features, changed best practices
+3. Propose specific edits to the agent spec
+4. If `--apply`: apply safe updates automatically
+
+### New Agent Detection
+
+Scan project ecosystem for frameworks/tools that don't have a matching agent:
+
+```bash
+# Check if project uses a framework without a dedicated agent
+for pkg in $(cat package.json 2>/dev/null | jq -r '.dependencies // {} | keys[]' 2>/dev/null); do
+  case "$pkg" in
+    svelte|@sveltejs/kit)
+      [ -f .claude/agents/frontend/svelte-developer.md ] || echo "MISSING: svelte-developer agent"
+      ;;
+    remix|@remix-run/*)
+      [ -f .claude/agents/frontend/remix-developer.md ] || echo "SUGGEST: remix-developer agent"
+      ;;
+    solid-js)
+      [ -f .claude/agents/frontend/solidjs-developer.md ] || echo "SUGGEST: solidjs-developer agent"
+      ;;
+    @nestjs/*)
+      [ -f .claude/agents/backend/nodejs-developer.md ] || echo "MISSING: nodejs-developer agent"
+      ;;
+    # Add more framework detection rules...
+  esac
+done
+```
+
+**When a missing agent is detected:**
+1. Report the gap with framework details
+2. Suggest creating a new agent via `/agent-creator`
+3. If `--apply`: offer to run `/agent-creator` automatically
+
+### Agent Spec Quality Scoring
+
+Score each agent spec on these criteria (0-100):
+
+| Criterion | Weight | Check |
+|-----------|--------|-------|
+| Frontmatter complete | 15% | name, category, description, tools, skills, auto_activate, reports_to |
+| Constitution reference | 10% | Links to Constitution.md, key rules listed |
+| Documentation-first | 10% | Framework docs URLs, mandatory reading instructions |
+| Context protocol | 10% | repomix/rag strategy sections |
+| Communication protocol | 10% | SendMessage types documented |
+| Code examples | 15% | Modern patterns, anti-patterns, real-world examples |
+| Quality checklist | 10% | Pre-completion checklist present |
+| Selection logic (architects) | 10% | Developer selection matrix (sub-orchestrators only) |
+| Working methodology | 10% | Clear phases, collaboration patterns |
+
+```bash
+# Quick quality scan
+for agent in .claude/agents/**/*.md; do
+  echo "=== $(basename $agent) ==="
+  score=0
+  grep -q "^name:" "$agent" && score=$((score + 15))
+  grep -q "Constitution" "$agent" && score=$((score + 10))
+  grep -q "Documentation-First\|llms.txt\|llms-full.txt" "$agent" && score=$((score + 10))
+  grep -q "Context Protocol" "$agent" && score=$((score + 10))
+  grep -q "Communication Protocol\|SendMessage" "$agent" && score=$((score + 10))
+  grep -c '```' "$agent" | awk '{if ($1 >= 4) print "code_examples: yes"}' && score=$((score + 15))
+  grep -q "checklist\|Checklist" "$agent" && score=$((score + 10))
+  grep -q "Selection Matrix\|selection" "$agent" && score=$((score + 10))
+  grep -q "Methodology\|methodology\|Working" "$agent" && score=$((score + 10))
+  echo "Score: $score/100"
+done
+```
+
+### Ecosystem Monitoring
+
+Research new tools, MCP servers, and agent patterns:
+
+```
+WebSearch("Claude Code new MCP servers {current_year}")
+WebSearch("Claude Code agent patterns best practices {current_year}")
+WebSearch("multi-agent AI development tools new {current_year}")
+WebSearch("Claude Code plugins new releases")
+```
+
+**Evaluate each finding:**
+- Does it solve a gap in our current system?
+- Can it replace an existing tool more efficiently?
+- Is it mature enough for production use?
+- What's the integration effort?
+
+### Constitution Compliance Check
+
+Verify all agents follow Constitution.md rules:
+
+```bash
+# Check tool restrictions
+for agent in .claude/agents/spec-agents/spec-analyst.md .claude/agents/spec-agents/spec-planner.md; do
+  grep -q "Edit" "$agent" && echo "VIOLATION: $(basename $agent) has Edit tool (planning agent)"
+done
+
+# Check sub-orchestrators have Task tool
+for agent in senior-frontend-architect senior-backend-architect senior-devops-architect security-architect; do
+  grep -q "Task" ".claude/agents/*/$agent.md" 2>/dev/null || echo "VIOLATION: $agent missing Task tool"
+done
+
+# Check all execution agents have SendMessage
+for agent in .claude/agents/frontend/*.md .claude/agents/backend/*.md; do
+  grep -q "SendMessage" "$agent" || echo "VIOLATION: $(basename $agent) missing SendMessage"
+done
+```
+
+### Update Report with Evolution Recommendations
+
+After full audit, add evolution section to report:
+
+```markdown
+## Agent Evolution Recommendations
+
+### New Agents Needed
+- {framework}: {justification}, priority: {HIGH/MEDIUM/LOW}
+
+### Agent Spec Updates
+- {agent-name}: {what to update}, {why}
+
+### Framework Version Updates
+- {agent} references {old-version} patterns, current is {new-version}
+- Breaking changes: {list}
+- New features to document: {list}
+
+### MCP Server Updates
+- {server}: {new version available / new server to add}
+
+### Architectural Improvements
+- {improvement}: {description}, impact: {HIGH/MEDIUM/LOW}
+```
+
 ## Integration with Other Skills
 
 - **/directives**: Read/update project.yaml settings
@@ -343,3 +507,4 @@ With `--apply` flag, automatically implement safe improvements:
 - **/repomix-snapshot**: Check snapshot freshness and strategy
 - **/code-search**: Verify search capabilities work
 - **/team-comms**: Validate communication protocol compliance
+- **/agent-creator**: Create new agents when gaps are detected

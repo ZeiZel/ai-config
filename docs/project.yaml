@@ -73,8 +73,8 @@ agents:
   total_count: 60
   categories:
     spec-agents: 8
-    frontend: 5
-    backend: 1
+    frontend: 6
+    backend: 5
     devops: 3
     security: 2
     data: 2
@@ -125,11 +125,11 @@ orchestration:
   sub_orchestrators:
     senior-frontend-architect:
       domain: frontend
-      manages: [react-developer, vue-frontend-engineer, angular-frontend-engineer, open-pencil-designer]
+      manages: [react-developer, vue-frontend-engineer, angular-frontend-engineer, svelte-developer, open-pencil-designer]
       max_concurrent: 4
     senior-backend-architect:
       domain: backend
-      manages: [database-architect, api-designer, realtime-specialist, search-specialist, payments-specialist]
+      manages: [golang-developer, nodejs-developer, php-developer, dotnet-developer, database-architect, api-designer, realtime-specialist, search-specialist, payments-specialist]
       max_concurrent: 4
     senior-devops-architect:
       domain: devops
@@ -167,7 +167,12 @@ model_routing:
     - react-developer
     - angular-frontend-engineer
     - vue-frontend-engineer
+    - svelte-developer
     - open-pencil-designer
+    - golang-developer
+    - nodejs-developer
+    - php-developer
+    - dotnet-developer
     - database-architect
     - api-designer
     - realtime-specialist

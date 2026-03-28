@@ -65,11 +65,18 @@ Rules that ALL agents in this system MUST follow. Violations are considered bugs
 - MUST NOT make architectural decisions — only design implementation
 - Hand off design specs and tokens to frontend agents for code generation
 
-### Frontend Agents (react-developer, angular-frontend-engineer, vue-frontend-engineer)
+### Frontend Agents (react-developer, angular-frontend-engineer, vue-frontend-engineer, svelte-developer)
 - **MUST read framework documentation before coding** (see Section 4)
 - Write frontend code and server functions allowed by their framework
 - Report to front-lead, who reports to team-lead
 - Have Figma MCP and OpenPencil MCP tools for design implementation
+
+### Backend Developer Agents (golang-developer, nodejs-developer, php-developer, dotnet-developer)
+- Write backend code in their respective language/framework
+- Report to senior-backend-architect (sub-orchestrator)
+- Have RAG tools for self-service context
+- Must claim tasks via `bd update --claim` before starting
+- Must follow language-specific best practices and project conventions
 
 ### Frontend Standards Advisor (front-lead)
 - Consult on code standards, design system governance, framework selection
