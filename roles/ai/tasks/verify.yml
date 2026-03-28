@@ -47,9 +47,8 @@
       MCP qdrant-mcp:   {{ 'OK' if 'qdrant-mcp' in (mcp_verify.stdout | default('')) else 'MISSING' }}
       MCP code-index:   {{ 'OK' if 'code-index-mcp' in (mcp_verify.stdout | default('')) else 'MISSING' }}
       MCP context7:     {{ 'OK' if 'context7' in (mcp_verify.stdout | default('')) else 'MISSING' }}
-      MCP mem0:         {{ 'OK' if 'mem0' in (mcp_verify.stdout | default('')) else 'MISSING' }}
+      MCP mem0:         {{ 'OK' if 'mem0' in (mcp_verify.stdout | default('')) else 'DISABLED (needs API key)' }}
       MCP docfork:      {{ 'OK' if 'docfork' in (mcp_verify.stdout | default('')) else 'MISSING' }}
       MCP tree-sitter:  {{ 'OK' if 'tree-sitter' in (mcp_verify.stdout | default('')) else 'MISSING' }}
-      MCP claude-ctx:   {{ 'OK' if 'claude-context' in (mcp_verify.stdout | default('')) else 'MISSING' }}
       Endpoint:         http://localhost:{{ qdrant_port_rest }}
       ============================================

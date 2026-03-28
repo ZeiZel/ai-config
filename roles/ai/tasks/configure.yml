@@ -225,36 +225,3 @@
       failed_when: false
       environment:
         PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
-
-    # Claude Context MCP (Zilliz) - hybrid code search
-    - name: Configure | Remove existing claude-context
-      ansible.builtin.command:
-        cmd: "{{ claude_bin }} mcp remove --scope {{ claude_mcp_scope }} claude-context"
-      when: claude_context_mcp_enabled and ('claude-context' in mcp_list.stdout)
-      changed_when: false
-      failed_when: false
-      environment:
-        PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
-
-    - name: Configure | Add Claude Context MCP Server
-      ansible.builtin.shell:
-        cmd: >
-          {{ claude_bin }} mcp add-json
-          --scope {{ claude_mcp_scope }}
-          claude-context
-          '{{ claude_context_mcp_config | to_json }}'
-      vars:
-        claude_context_mcp_config:
-          type: stdio
-          command: "{{ npx_bin }}"
-          args:
-            - "-y"
-            - "{{ claude_context_mcp_package }}"
-          env:
-            EMBEDDING_PROVIDER: "{{ claude_context_embedding_provider }}"
-      when: claude_context_mcp_enabled
-      register: claude_context_mcp_add
-      changed_when: claude_context_mcp_add.rc == 0
-      failed_when: false
-      environment:
-        PATH: "{{ dotfiles_home }}/.bun/bin:{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"

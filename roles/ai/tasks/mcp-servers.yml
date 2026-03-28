@@ -72,14 +72,3 @@
   when: tree_sitter_mcp_enabled
   environment:
     PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
-
-# Claude Context MCP (Zilliz) - hybrid code search
-- name: MCP Servers | Pre-cache Claude Context MCP via npx
-  ansible.builtin.command:
-    cmd: "{{ npx_bin }} -y {{ claude_context_mcp_package }} --help"
-  register: claude_context_install
-  changed_when: false
-  failed_when: false
-  when: claude_context_mcp_enabled
-  environment:
-    PATH: "{{ dotfiles_home }}/.bun/bin:{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"

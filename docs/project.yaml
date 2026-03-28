@@ -68,16 +68,12 @@ infrastructure:
       transport: stdio
       package: mcp-server-tree-sitter
       runner: uvx
-    - name: claude-context
-      scope: user
-      transport: stdio
-      package: "@zilliz/claude-context-mcp"
-      runner: npx
     - name: mem0
       scope: user
       transport: stdio
       package: mem0-mcp-server
       runner: uvx
+      optional: true  # requires MEM0_API_KEY (paid)
     - name: open-pencil
       scope: user
       transport: stdio

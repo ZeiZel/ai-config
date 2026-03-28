@@ -42,10 +42,10 @@ context7_mcp_enabled: true
 context7_mcp_url: "https://mcp.context7.com/mcp"
 
 # Mem0 - structured agent memory (episodic/semantic/procedural)
-# 26% accuracy boost over flat vector search
-# Package: mem0-mcp-server (PyPI) — requires MEM0_API_KEY from https://app.mem0.ai
+# DISABLED: requires MEM0_API_KEY (paid cloud API)
+# To enable: set mem0_enabled=true and provide MEM0_API_KEY env var
 # Alternative: OpenMemory (self-hosted) — see mem0ai/mem0/openmemory
-mem0_enabled: true
+mem0_enabled: false
 mem0_package: "mem0-mcp-server"
 mem0_data_dir: "{{ dotfiles_home }}/.local/share/mem0"
 
@@ -59,13 +59,6 @@ docfork_package: "docfork"
 tree_sitter_mcp_enabled: true
 tree_sitter_mcp_package: "mcp-server-tree-sitter"
 
-# Claude Context MCP (Zilliz) - hybrid BM25 + dense vector search
-# AST-aware code chunking, Merkle tree incremental indexing, ~40% token reduction
-# Requires EMBEDDING_PROVIDER env var (OpenAI, VoyageAI, Gemini, Ollama)
-# Set OPENAI_API_KEY or configure Ollama for local embeddings
-claude_context_mcp_enabled: true
-claude_context_mcp_package: "@zilliz/claude-context-mcp"
-claude_context_embedding_provider: "OpenAI"
 
 # OpenPencil - open-source Figma alternative with AI MCP
 open_pencil_enabled: true
