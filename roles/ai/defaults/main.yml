@@ -49,6 +49,24 @@ mem0_enabled: true
 mem0_package: "mem0-mcp-server"
 mem0_data_dir: "{{ dotfiles_home }}/.local/share/mem0"
 
+# Docfork MCP - MIT alternative to Context7, no rate limits
+# Up-to-date library documentation for AI agents
+docfork_enabled: true
+docfork_package: "docfork"
+
+# Tree-sitter MCP - AST-aware structural code analysis
+# Fast in-memory code search using tree-sitter grammars
+tree_sitter_mcp_enabled: true
+tree_sitter_mcp_package: "mcp-server-tree-sitter"
+
+# Claude Context MCP (Zilliz) - hybrid BM25 + dense vector search
+# AST-aware code chunking, Merkle tree incremental indexing, ~40% token reduction
+# Requires EMBEDDING_PROVIDER env var (OpenAI, VoyageAI, Gemini, Ollama)
+# Set OPENAI_API_KEY or configure Ollama for local embeddings
+claude_context_mcp_enabled: true
+claude_context_mcp_package: "@zilliz/claude-context-mcp"
+claude_context_embedding_provider: "OpenAI"
+
 # OpenPencil - open-source Figma alternative with AI MCP
 open_pencil_enabled: true
 open_pencil_cli_package: "@open-pencil/cli"

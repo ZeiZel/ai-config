@@ -50,3 +50,36 @@
     state: directory
     mode: "0755"
   when: mem0_enabled
+
+# Docfork - MIT library documentation (alternative to Context7)
+- name: MCP Servers | Pre-cache Docfork via npx
+  ansible.builtin.command:
+    cmd: "{{ npx_bin }} -y {{ docfork_package }} --help"
+  register: docfork_install
+  changed_when: false
+  failed_when: false
+  when: docfork_enabled
+  environment:
+    PATH: "{{ dotfiles_home }}/.bun/bin:{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+# Tree-sitter MCP - AST-aware code analysis
+- name: MCP Servers | Pre-cache Tree-sitter MCP via uvx
+  ansible.builtin.command:
+    cmd: "{{ uvx_bin }} --from {{ tree_sitter_mcp_package }} mcp-server-tree-sitter --help"
+  register: tree_sitter_install
+  changed_when: false
+  failed_when: false
+  when: tree_sitter_mcp_enabled
+  environment:
+    PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+# Claude Context MCP (Zilliz) - hybrid code search
+- name: MCP Servers | Pre-cache Claude Context MCP via npx
+  ansible.builtin.command:
+    cmd: "{{ npx_bin }} -y {{ claude_context_mcp_package }} --help"
+  register: claude_context_install
+  changed_when: false
+  failed_when: false
+  when: claude_context_mcp_enabled
+  environment:
+    PATH: "{{ dotfiles_home }}/.bun/bin:{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"

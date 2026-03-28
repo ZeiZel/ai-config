@@ -58,16 +58,31 @@ infrastructure:
       scope: user
       transport: http
       url: https://mcp.context7.com/mcp
+    - name: docfork
+      scope: user
+      transport: stdio
+      package: docfork
+      runner: npx
+    - name: tree-sitter
+      scope: user
+      transport: stdio
+      package: mcp-server-tree-sitter
+      runner: uvx
+    - name: claude-context
+      scope: user
+      transport: stdio
+      package: "@zilliz/claude-context-mcp"
+      runner: npx
     - name: mem0
       scope: user
       transport: stdio
-      package: mem0-mcp
+      package: mem0-mcp-server
       runner: uvx
     - name: open-pencil
       scope: user
       transport: stdio
       package: "@open-pencil/mcp"
-      runner: npx
+      runner: bunx
 
 agents:
   total_count: 60

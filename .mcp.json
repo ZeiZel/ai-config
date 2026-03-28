@@ -6,6 +6,12 @@
       "args": ["-y", "@upstash/context7-mcp"],
       "description": "Library documentation lookup - provides up-to-date docs for any npm package"
     },
+    "docfork": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "docfork"],
+      "description": "MIT library documentation - alternative to Context7, no rate limits"
+    },
     "sequential-thinking": {
       "type": "stdio",
       "command": "npx",

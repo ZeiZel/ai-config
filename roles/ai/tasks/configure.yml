@@ -162,3 +162,99 @@
       failed_when: false
       environment:
         PATH: "{{ dotfiles_home }}/.bun/bin:{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+    # Docfork MCP - MIT library documentation
+    - name: Configure | Remove existing docfork
+      ansible.builtin.command:
+        cmd: "{{ claude_bin }} mcp remove --scope {{ claude_mcp_scope }} docfork"
+      when: docfork_enabled and ('docfork' in mcp_list.stdout)
+      changed_when: false
+      failed_when: false
+      environment:
+        PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+    - name: Configure | Add Docfork MCP Server
+      ansible.builtin.shell:
+        cmd: >
+          {{ claude_bin }} mcp add-json
+          --scope {{ claude_mcp_scope }}
+          docfork
+          '{{ docfork_mcp_config | to_json }}'
+      vars:
+        docfork_mcp_config:
+          type: stdio
+          command: "{{ npx_bin }}"
+          args:
+            - "-y"
+            - "{{ docfork_package }}"
+      when: docfork_enabled
+      register: docfork_mcp_add
+      changed_when: docfork_mcp_add.rc == 0
+      failed_when: false
+      environment:
+        PATH: "{{ dotfiles_home }}/.bun/bin:{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+    # Tree-sitter MCP - AST-aware code analysis
+    - name: Configure | Remove existing tree-sitter
+      ansible.builtin.command:
+        cmd: "{{ claude_bin }} mcp remove --scope {{ claude_mcp_scope }} tree-sitter"
+      when: tree_sitter_mcp_enabled and ('tree-sitter' in mcp_list.stdout)
+      changed_when: false
+      failed_when: false
+      environment:
+        PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+    - name: Configure | Add Tree-sitter MCP Server
+      ansible.builtin.shell:
+        cmd: >
+          {{ claude_bin }} mcp add-json
+          --scope {{ claude_mcp_scope }}
+          tree-sitter
+          '{{ tree_sitter_mcp_config | to_json }}'
+      vars:
+        tree_sitter_mcp_config:
+          type: stdio
+          command: "{{ uvx_bin }}"
+          args:
+            - "--from"
+            - "{{ tree_sitter_mcp_package }}"
+            - mcp-server-tree-sitter
+      when: tree_sitter_mcp_enabled
+      register: tree_sitter_mcp_add
+      changed_when: tree_sitter_mcp_add.rc == 0
+      failed_when: false
+      environment:
+        PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+    # Claude Context MCP (Zilliz) - hybrid code search
+    - name: Configure | Remove existing claude-context
+      ansible.builtin.command:
+        cmd: "{{ claude_bin }} mcp remove --scope {{ claude_mcp_scope }} claude-context"
+      when: claude_context_mcp_enabled and ('claude-context' in mcp_list.stdout)
+      changed_when: false
+      failed_when: false
+      environment:
+        PATH: "{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
+
+    - name: Configure | Add Claude Context MCP Server
+      ansible.builtin.shell:
+        cmd: >
+          {{ claude_bin }} mcp add-json
+          --scope {{ claude_mcp_scope }}
+          claude-context
+          '{{ claude_context_mcp_config | to_json }}'
+      vars:
+        claude_context_mcp_config:
+          type: stdio
+          command: "{{ npx_bin }}"
+          args:
+            - "-y"
+            - "{{ claude_context_mcp_package }}"
+          env:
+            EMBEDDING_PROVIDER: "{{ claude_context_embedding_provider }}"
+      when: claude_context_mcp_enabled
+      register: claude_context_mcp_add
+      changed_when: claude_context_mcp_add.rc == 0
+      failed_when: false
+      environment:
+        PATH: "{{ dotfiles_home }}/.bun/bin:{{ dotfiles_home }}/.local/bin:{{ ansible_facts['env']['PATH'] }}"
