@@ -1,8 +1,0 @@
-[
-  {
-    "from": "team-lead",
-    "text": "{\"type\":\"task_assignment\",\"taskId\":\"1\",\"subject\":\"Move Header/Footer to App Router Layout\",\"description\":\"Move Header and Footer components from individual pages (ClientPage, etc.) into app/layout.tsx or app/cards/layout.tsx. Currently ClientPage imports and renders Header/Footer directly. They should be in the layout wrapper so ALL pages (including SMS) get them automatically.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-22T16:34:43.623Z\"}",
-    "timestamp": "2026-03-22T16:34:43.624Z",
-    "read": false
-  }
-]

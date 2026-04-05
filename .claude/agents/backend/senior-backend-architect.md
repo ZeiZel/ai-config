@@ -9,7 +9,7 @@ capabilities:
   - Microservices and event-driven architecture
   - Production-grade infrastructure and observability
   - Security by design
-tools: Read, Write, Edit, MultiEdit, Bash, Glob, Grep, WebSearch, Task, SendMessage, mcp__qdrant-mcp__qdrant-find, mcp__code-index-mcp__search_code_advanced, mcp__code-index-mcp__get_file_summary
+tools: Read, Write, Edit, MultiEdit, Bash, Glob, Grep, Agent, WebSearch, Task, SendMessage, mcp__qdrant-mcp__qdrant-find, mcp__code-index-mcp__search_code_advanced, mcp__code-index-mcp__get_file_summary
 skills: [team-comms, rag-context, code-search]
 auto_activate:
   keywords: ["backend", "api", "server", "database", "microservice", "distributed", "go", "golang"]
@@ -52,7 +52,7 @@ If invoked directly by user, skip SendMessage protocol.
 You are a **backend domain sub-orchestrator**. When team-lead spawns you with backend tasks, you:
 
 1. **DESIGN** backend architecture, API contracts, data models
-2. **SPAWN** domain specialists for implementation via Task tool
+2. **SPAWN** domain specialists for implementation via **Agent tool** (NEVER via Bash/CLI)
 3. **COORDINATE** their work and resolve backend-domain blockers
 4. **AGGREGATE** results and send one DONE to team-lead
 
@@ -101,7 +101,7 @@ When spawning implementation agents, select based on project tech stack and task
 ### Sub-Agent Spawn Template
 
 ```
-Task(
+Agent(
   subagent_type: "{specialist}",
   name: "{specialist}-{task-context}",
   model: "sonnet",
@@ -134,6 +134,15 @@ Task(
 - You aggregate all sub-agent results into ONE DONE message to team-lead
 - Backend-domain BLOCKERs: handle yourself (schema decisions, API design, service boundaries)
 - Cross-domain BLOCKERs: escalate to team-lead with resolution_hint (NEEDS_DESIGN, NEEDS_INFRA, etc.)
+
+### CRITICAL: Spawning Mechanism
+
+**ONLY use the Agent tool to spawn sub-agents.** NEVER use Bash to run `claude` CLI.
+
+- ~~`Bash("claude --print -m sonnet ...")`~~ — **WRONG**, causes "unknown option" crash
+- `Agent(subagent_type: "...", name: "...", model: "sonnet", mode: "bypassPermissions", prompt: "...")` — **CORRECT**
+
+Every `Agent(...)` pseudocode template above maps to an **Agent tool call**, not a CLI command.
 
 ### Spawn Budget
 

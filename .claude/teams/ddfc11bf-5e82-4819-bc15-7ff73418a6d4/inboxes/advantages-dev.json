@@ -1,8 +1,0 @@
-[
-  {
-    "from": "team-lead",
-    "text": "{\"type\":\"task_assignment\",\"taskId\":\"3\",\"subject\":\"Implement Advantages widget\",\"description\":\"Implement responsive Advantages widget. Title \\\"Бесплатно\\\". 3 items with icons: \\\"Выпуск и обслуживание\\\", \\\"СМС-информирование\\\", \\\"Снятие наличных\\\". Desktop: 3 cols. Tablet: 2+1. Mobile: stacked. Each item is a Card with icon + text.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-22T11:27:11.584Z\"}",
-    "timestamp": "2026-03-22T11:27:11.584Z",
-    "read": false
-  }
-]

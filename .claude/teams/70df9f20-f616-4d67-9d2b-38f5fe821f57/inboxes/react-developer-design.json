@@ -1,8 +1,0 @@
-[
-  {
-    "from": "team-lead",
-    "text": "{\"type\":\"task_assignment\",\"taskId\":\"2\",\"subject\":\"Fix design to match mockup\",\"description\":\"The page at /cards/?utm_content=3252 must match the provided design mockup. Check the current state in browser, compare with the mockup, and iterate until it matches exactly.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-22T16:41:37.952Z\"}",
-    "timestamp": "2026-03-22T16:41:37.952Z",
-    "read": false
-  }
-]

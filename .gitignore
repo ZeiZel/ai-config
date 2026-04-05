@@ -20,6 +20,8 @@
 .claude/mcp-needs-auth-cache.json
 .claude/*-cache.json
 .claude/session-env/
+.claude/session-usage.json
+.claude/teams/
 
 # Context snapshots (regenerated via repomix)
 docs/context/codebase-snapshot.txt
@@ -37,3 +39,5 @@ logs/
 .idea/
 .vscode/
 .claude/plugins/marketplaces/
+.claude/plugins/blocklist.json
+.claude/plugins/known_marketplaces.json

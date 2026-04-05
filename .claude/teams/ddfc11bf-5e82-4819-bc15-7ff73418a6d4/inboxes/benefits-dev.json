@@ -1,8 +1,0 @@
-[
-  {
-    "from": "team-lead",
-    "text": "{\"type\":\"task_assignment\",\"taskId\":\"2\",\"subject\":\"Implement Benefits widget\",\"description\":\"Implement responsive Benefits widget. Title \\\"Преимущества карты «Халва»\\\". Bento grid with 6 items and 2 images. Items: \\\"Более 260 000\\\" (partners), \\\"Рассрочка 24 месяца\\\", \\\"Кэшбэк до 10%\\\", \\\"До +5% годовых\\\", \\\"Без скрытых условий\\\", \\\"Рефинансирование карт\\\". Uses benefits.png and bar-charts.png images.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-22T11:27:11.584Z\"}",
-    "timestamp": "2026-03-22T11:27:11.584Z",
-    "read": false
-  }
-]

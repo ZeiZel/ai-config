@@ -11,7 +11,7 @@ capabilities:
   - Authentication/authorization (OAuth 2.0, OIDC, RBAC, ABAC)
   - Security compliance frameworks
   - Penetration testing guidance
-tools: Read, Write, Edit, Glob, Grep, Bash, WebSearch, Task, SendMessage, mcp__qdrant-mcp__qdrant-find, mcp__code-index-mcp__search_code_advanced, mcp__code-index-mcp__get_file_summary
+tools: Read, Write, Edit, Glob, Grep, Bash, Agent, WebSearch, Task, SendMessage, mcp__qdrant-mcp__qdrant-find, mcp__code-index-mcp__search_code_advanced, mcp__code-index-mcp__get_file_summary
 skills: [team-comms, rag-context, code-search]
 reports_to: team-lead
 auto_activate:
@@ -46,7 +46,7 @@ You are a **security domain sub-orchestrator**. When team-lead spawns you with s
 ### Sub-Agent Spawn Template
 
 ```
-Task(
+Agent(
   subagent_type: "compliance-officer",
   name: "compliance-{task-context}",
   model: "sonnet",
@@ -68,6 +68,15 @@ Task(
   "
 )
 ```
+
+### CRITICAL: Spawning Mechanism
+
+**ONLY use the Agent tool to spawn sub-agents.** NEVER use Bash to run `claude` CLI.
+
+- ~~`Bash("claude --print -m sonnet ...")`~~ — **WRONG**, causes "unknown option" crash
+- `Agent(subagent_type: "...", name: "...", model: "sonnet", mode: "bypassPermissions", prompt: "...")` — **CORRECT**
+
+Every `Agent(...)` pseudocode template above maps to an **Agent tool call**, not a CLI command.
 
 ### Spawn Budget
 

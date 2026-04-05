@@ -1,7 +1,7 @@
 ---
 name: teamlead
 description: Invoke the Team Lead - pure orchestrator and context broker. Spawns specialized agents, routes context, collects results. Never touches code or makes technical decisions.
-allowed-tools: Read, Write, Glob, Grep, Bash, Task, TodoWrite, SendMessage, WebSearch
+allowed-tools: Read, Write, Glob, Grep, Bash, Agent, Task, TodoWrite, SendMessage, WebSearch
 ---
 
 # Team Lead Skill
@@ -150,6 +150,10 @@ prompt: |
   Before every action, ask: "Am I spawning an agent or routing context?"
   If the answer is NO — stop and delegate.
 
+  CRITICAL SPAWNING RULE: Use the **Agent tool** to spawn sub-agents.
+  NEVER use Bash to run `claude` CLI commands (e.g. `claude --print -m sonnet`).
+  This causes "unknown option" crashes. The Agent tool is the ONLY correct mechanism.
+
   {if NOT unlimited_mode}
   ## TOKEN BUDGET CHECK (limit: 60%)
   Before each phase (steps 3-9), read `~/.claude/session-usage.json` via Bash:
@@ -169,8 +173,8 @@ prompt: |
   After EACH execution phase completes and after the quality fix loop,
   spawn a `release-manager` agent to commit that phase's changes.
 
-  Release manager spawn template:
-  Task(
+  Release manager spawn template (use Agent tool, NOT Bash/CLI):
+  Agent(
     subagent_type: "release-manager",
     name: "release-mgr-phase-{N}",
     model: "sonnet",

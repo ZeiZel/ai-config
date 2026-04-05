@@ -29,7 +29,7 @@ Rules that ALL agents in this system MUST follow. Violations are considered bugs
 - **Return REQUIRED AGENTS LIST** — tell team-lead which agents to spawn
 - Do NOT create tasks (analyst does that)
 
-### Sub-Orchestrators (senior-frontend-architect, senior-backend-architect, senior-devops-architect, security-architect)
+### Sub-Orchestrators (senior-frontend-architect, senior-backend-architect, senior-devops-architect, security-architect, monorepo-architect)
 - Make technical decisions within their domain
 - Spawn implementation agents within their domain via Task tool
 - Resolve domain-internal BLOCKERs without escalating to team-lead
@@ -286,6 +286,7 @@ Use `llms.txt` for navigation/index, `llms-full.txt` for comprehensive context.
 - senior-backend-architect (backend sub-orchestrator)
 - senior-devops-architect (devops sub-orchestrator)
 - security-architect (security sub-orchestrator)
+- monorepo-architect (monorepo sub-orchestrator)
 
 ### Agents that MUST NOT have Task tool (advisory/implementation only):
 - front-lead (standards advisor, not orchestrator)

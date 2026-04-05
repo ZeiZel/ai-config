@@ -146,6 +146,10 @@ orchestration:
       domain: devops
       manages: [deployment-engineer, devops-troubleshooter]
       max_concurrent: 2
+    monorepo-architect:
+      domain: monorepo
+      manages: [react-developer, vue-frontend-engineer, angular-frontend-engineer, svelte-developer, nodejs-developer, golang-developer, dotnet-developer, php-developer, deployment-engineer]
+      max_concurrent: 4
     security-architect:
       domain: security
       manages: [compliance-officer]
@@ -174,6 +178,7 @@ model_routing:
     - senior-backend-architect
     - senior-frontend-architect
     - senior-devops-architect
+    - monorepo-architect
     - front-lead
     - react-developer
     - angular-frontend-engineer

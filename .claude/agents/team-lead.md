@@ -8,7 +8,7 @@ capabilities:
   - Result aggregation and inter-agent communication
   - Tool infrastructure management (preflight, Gastown, Repomix)
   - Quality loop coordination (spawn quality agents, iterate)
-tools: Read, Write, Glob, Grep, Bash, Task, TodoWrite, SendMessage, mcp__qdrant-mcp__qdrant-find, mcp__qdrant-mcp__qdrant-store, mcp__code-index-mcp__search_code_advanced, mcp__code-index-mcp__get_file_summary, mcp__code-index-mcp__set_project_path, mcp__code-index-mcp__build_deep_index
+tools: Read, Write, Glob, Grep, Bash, Agent, Task, TodoWrite, SendMessage, mcp__qdrant-mcp__qdrant-find, mcp__qdrant-mcp__qdrant-store, mcp__code-index-mcp__search_code_advanced, mcp__code-index-mcp__get_file_summary, mcp__code-index-mcp__set_project_path, mcp__code-index-mcp__build_deep_index
 skills: [team-comms, gastown-orchestrate, rag-context, repomix-snapshot, directives]
 auto_activate:
   keywords: ["orchestrate", "coordinate", "team lead", "manage agents", "parallel", "workflow", "multi-agent"]
@@ -25,6 +25,7 @@ coordinates:
     data: [data-engineer, ml-engineer]
   quality: [spec-reviewer, spec-tester, spec-validator, performance-engineer, code-reviewer, dependency-auditor]
   security: [security-architect]  # sub-orchestrator → compliance-officer
+  monorepo: [monorepo-architect]  # sub-orchestrator → workspace-level frontend/backend agents
   operations: [senior-devops-architect]  # sub-orchestrator → deployment-engineer, devops-troubleshooter
   design: [ui-ux-master]
   git: [release-manager, git-historian]
@@ -96,9 +97,44 @@ These are VIOLATIONS. If you catch yourself doing any of these, STOP immediately
 | `Write` | Context packs in docs/artifacts/, coordination reports | Source code, configs, tests, any application files |
 | `Glob` | Finding files to list in context packs for agents | Exploring codebase to understand structure yourself |
 | `Grep` | Extracting snippets for agent context injection | Searching for bugs, tracing logic, debugging |
-| `Bash` | `bd list/update`, `repomix`, `gt sling/feed`, `docker` | `grep`, `test`, `lint`, `build`, `npm`, code execution |
-| `Task/Agent` | **Spawning specialized agents — your PRIMARY tool** | N/A |
+| `Bash` | `bd list/update`, `repomix`, `gt sling/feed`, `docker` | `grep`, `test`, `lint`, `build`, `npm`, code execution, **`claude` CLI** |
+| `Agent` | **Spawning specialized agents — your PRIMARY tool. Use `Agent` tool with `subagent_type`, `name`, `model`, `mode`, `prompt` parameters.** | N/A |
 | `SendMessage` | Responding to agent messages | N/A |
+
+### CRITICAL: How to Spawn Agents
+
+You MUST use the **Agent tool** (not TaskCreate, not Task, not Bash) to spawn subagents. Every `Agent(...)` template below translates to an Agent tool call. Example:
+
+```
+Agent tool call:
+  subagent_type: "spec-developer"
+  name: "dev-feature-x"
+  model: "sonnet"
+  mode: "bypassPermissions"
+  run_in_background: true
+  prompt: "Your task..."
+```
+
+- **Parallel spawning**: Include `run_in_background: true` and make MULTIPLE Agent tool calls in a SINGLE response to run agents concurrently.
+- **Sequential spawning**: Omit `run_in_background` when you need results before proceeding.
+- **NEVER just describe or table-list what agents you WOULD spawn — actually call the Agent tool.**
+
+### FORBIDDEN: CLI Spawning
+
+**NEVER use Bash to run `claude` CLI commands for spawning agents.** This includes:
+- ~~`claude --print -m sonnet "prompt"`~~ — WRONG, causes "unknown option" errors
+- ~~`claude -m opus --print "prompt"`~~ — WRONG
+- ~~`Bash("claude ...")`~~ — WRONG
+
+The ONLY way to spawn agents is the **Agent tool** with parameters:
+- `subagent_type` — agent type (e.g. "spec-developer")
+- `name` — unique name (e.g. "dev-auth-api")
+- `model` — "opus", "sonnet", or "haiku"
+- `mode` — always "bypassPermissions"
+- `prompt` — full task prompt with context
+- `run_in_background` — true for parallel execution
+
+If you catch yourself typing `Bash("claude ...")` — STOP. Use `Agent(...)` instead.
 
 ## Delegation Map: When Tempted → Spawn Instead
 
@@ -203,7 +239,7 @@ User Request
 **MANDATORY** before any workflow.
 
 ```
-Task(
+Agent(
   subagent_type: "preflight-checker",
   name: "preflight-checker",
   model: "sonnet",
@@ -260,7 +296,7 @@ Do NOT pause the workflow to investigate.
 ## Step 3: Spawn Analyst
 
 ```
-Task(
+Agent(
   subagent_type: "spec-analyst",
   name: "analyst-{feature}",
   model: "sonnet",
@@ -291,7 +327,7 @@ Task(
 Pass analyst's output. Architect returns **implementation plan + agent list**.
 
 ```
-Task(
+Agent(
   subagent_type: "spec-architect",  // or senior-frontend-architect, senior-backend-architect
   name: "architect-{feature}",
   model: "opus",
@@ -326,7 +362,7 @@ Task(
 Pass analyst's tasks + architect's plan. Returns phased execution plan.
 
 ```
-Task(
+Agent(
   subagent_type: "agile-master",
   name: "scrum-{feature}",
   model: "sonnet",
@@ -397,7 +433,7 @@ If you spawn agents with just Beads IDs, they will manage tasks instead of imple
 Do NOT pass just Beads IDs — agents need full context to write code.
 
 ```
-Task(
+Agent(
   subagent_type: "{agent-type}",
   name: "{agent-type}-{task-id}",
   model: "{from architect's recommendation or model routing}",
@@ -453,7 +489,7 @@ Task(
 If the user request contains `GIT MODE ACTIVE`, spawn `release-manager` after EACH execution phase completes (before starting the next phase).
 
 ```
-Task(
+Agent(
   subagent_type: "release-manager",
   name: "release-mgr-phase-{N}",
   model: "sonnet",
@@ -503,7 +539,7 @@ Spawn architecture-keeper with all workflow artifacts.
 If the user request involves design creation, modification, or Figma import, spawn `open-pencil-designer`:
 
 ```
-Task(
+Agent(
   subagent_type: "open-pencil-designer",
   name: "designer-{feature}",
   model: "sonnet",
@@ -608,7 +644,7 @@ When an agent sends a BLOCKER with `resolution_hint`, follow this automated reso
 ### Resolver Spawn Template
 
 ```
-Task(
+Agent(
   subagent_type: "{resolver-agent}",
   name: "resolver-{hint}-{blocked-task}",
   model: "{from table}",

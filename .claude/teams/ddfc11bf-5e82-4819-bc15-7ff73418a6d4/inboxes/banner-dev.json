@@ -1,8 +1,0 @@
-[
-  {
-    "from": "team-lead",
-    "text": "{\"type\":\"task_assignment\",\"taskId\":\"6\",\"subject\":\"Implement Banner widget\",\"description\":\"Implement responsive Banner widget based on mockups. Desktop: two-column layout (text left, card image right), gradient bg. Tablet: similar but smaller. Mobile: stacked layout. Content: \\\"0 ₽ за всё\\\", subtitle, \\\"Оформить\\\" button, card images.\",\"assignedBy\":\"team-lead\",\"timestamp\":\"2026-03-22T11:27:11.584Z\"}",
-    "timestamp": "2026-03-22T11:27:11.584Z",
-    "read": false
-  }
-]
