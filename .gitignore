@@ -21,6 +21,7 @@
 .claude/*-cache.json
 .claude/session-env/
 .claude/session-usage.json
+.claude/settings.json
 .claude/teams/
 
 # Context snapshots (regenerated via repomix)
