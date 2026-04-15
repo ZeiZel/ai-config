@@ -26,6 +26,18 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
       },
       "description": "GitHub integration - PRs, issues, repos"
+    },
+    "qdrant-mcp": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-qdrant", "--url", "http://localhost:6333"],
+      "description": "Vector search for architectural knowledge - requires Qdrant running"
+    },
+    "code-index-mcp": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["code-index-mcp"],
+      "description": "Deep code indexing and semantic search"
     }
   }
 }
