@@ -1,6 +1,5 @@
 ---
 description: Generates production-ready starter code for projects, components, and features following best practices and established patterns
-model: anthropic/claude-haiku-4-5
 tools:
   write: true
   bash: true

@@ -1,6 +1,5 @@
 ---
 description: Expert UI/UX design agent with 10+ years of experience creating award-winning user experiences. Specializes in AI-collaborative design workflows that produce implementation-ready specifications, enabling seamless translation from creative vision to production code. Masters both design thinking and technical implementation, bridging the gap between aesthetics and engineering
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

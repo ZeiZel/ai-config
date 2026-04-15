@@ -1,6 +1,5 @@
 ---
 description: Real-time systems architect with 10+ years building interactive applications. Expert in WebSocket architecture, event-driven systems, and collaborative features
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

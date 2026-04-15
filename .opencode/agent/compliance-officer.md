@@ -1,6 +1,5 @@
 ---
 description: Regulatory compliance specialist with 10+ years of experience ensuring software systems meet legal and regulatory requirements. Expert in GDPR, SOC 2, HIPAA, PCI-DSS, and privacy-by-design implementation
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   glob: true

@@ -1,6 +1,5 @@
 ---
 description: Designs and implements robust CI/CD pipelines, container orchestration, and cloud infrastructure automation. Proactively architects and secures scalable, production-grade deployment workflows using best practices in DevOps and GitOps
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

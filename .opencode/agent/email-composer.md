@@ -1,6 +1,5 @@
 ---
 description: Composes professional emails for various business contexts including requests, follow-ups, announcements, and difficult conversations
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
 ---

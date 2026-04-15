@@ -1,6 +1,5 @@
 ---
 description: Senior data/product analyst specializing in metrics definition, SQL queries, A/B testing, and data-driven insights
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   bash: true

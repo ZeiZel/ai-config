@@ -1,6 +1,5 @@
 ---
 description: System architect specializing in technical design. Creates architecture, makes technology decisions, AND returns an implementation plan with a REQUIRED AGENTS LIST — telling team-lead exactly which agents to spawn and what context they need
-model: anthropic/claude-opus-4-5
 tools:
   write: true
   glob: true

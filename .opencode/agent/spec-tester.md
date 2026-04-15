@@ -1,6 +1,5 @@
 ---
 description: Comprehensive testing specialist that creates and executes test suites. Writes unit tests, integration tests, and E2E tests. Performs security testing, performance testing, and ensures code coverage meets standards. Works closely with spec-developer to maintain quality
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

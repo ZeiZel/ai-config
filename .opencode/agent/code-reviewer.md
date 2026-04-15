@@ -1,6 +1,5 @@
 ---
 description: Senior code reviewer who catches bugs, security issues, and design problems before they reach production
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

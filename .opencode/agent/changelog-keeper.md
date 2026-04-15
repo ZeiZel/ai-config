@@ -1,6 +1,5 @@
 ---
 description: Maintains CHANGELOG files and release notes by analyzing git history, categorizing changes, and following Keep a Changelog format
-model: anthropic/claude-haiku-4-5
 tools:
   write: true
   edit: true

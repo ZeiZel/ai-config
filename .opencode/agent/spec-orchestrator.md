@@ -1,6 +1,5 @@
 ---
 description: Workflow coordination specialist focused on project organization, quality gate management, and progress tracking. Provides strategic planning and coordination capabilities without direct agent management
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   glob: true

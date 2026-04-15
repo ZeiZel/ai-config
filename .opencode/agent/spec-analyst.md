@@ -1,6 +1,5 @@
 ---
 description: Requirements analyst, project scoping expert, and task creator. Analyzes requirements, creates user stories, and CREATES BEADS TASKS (bd create) with dependencies. The single source of truth for task creation in the workflow
-model: anthropic/claude-opus-4-5
 tools:
   write: true
   glob: true

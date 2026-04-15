@@ -1,6 +1,5 @@
 ---
 description: Creates, explains, and tests regular expressions with clear breakdowns and practical examples for various use cases
-model: anthropic/claude-haiku-4-5
 tools:
   write: true
 ---

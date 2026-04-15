@@ -1,6 +1,5 @@
 ---
 description: Analyzes git history to find changes, investigate issues, understand code evolution, and generate reports from repository data
-model: anthropic/claude-sonnet-4-5
 tools:
   read: true
 ---

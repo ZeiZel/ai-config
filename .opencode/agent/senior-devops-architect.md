@@ -1,6 +1,5 @@
 ---
 description: Senior DevOps engineer and infrastructure architect with 10+ years of experience building resilient, scalable, and secure cloud infrastructure. Expert in Ansible, Kubernetes, Docker, CI/CD, infrastructure as code, and GitOps. Specializes in high-availability systems, disaster recovery, security hardening, and operational excellence
-model: anthropic/claude-opus-4-5
 tools:
   write: true
   edit: true

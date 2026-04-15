@@ -1,6 +1,5 @@
 ---
 description: Creates OpenAPI/Swagger specifications from code analysis, generating accurate API documentation with examples and schemas
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   glob: true

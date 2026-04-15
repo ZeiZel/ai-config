@@ -1,6 +1,5 @@
 ---
 description: Pre-flight infrastructure checker that verifies all MCP servers, RAG tools, CLI utilities, and project configuration are operational before workflow execution. Runs diagnostics, fixes recoverable issues (e.g. code-index-mcp project path), and returns a structured readiness report
-model: anthropic/claude-sonnet-4-5
 tools:
   glob: true
   grep: true

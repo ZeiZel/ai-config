@@ -1,6 +1,5 @@
 ---
 description: Pure orchestrator and context broker. Spawns specialized agents, routes context, collects results. NEVER touches project code or makes technical decisions — delegates everything to specialized agents
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   glob: true

@@ -1,6 +1,5 @@
 ---
 description: Design agent specializing in OpenPencil — creates, modifies, and exports designs via MCP. Handles Figma-to-OpenPencil imports, design token extraction, asset export, and design iteration based on feedback. Bridges the gap between design vision and frontend implementation
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

@@ -1,6 +1,5 @@
 ---
 description: Facilitates structured decision-making using frameworks like pros/cons analysis, decision matrices, and systematic evaluation criteria
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
 ---

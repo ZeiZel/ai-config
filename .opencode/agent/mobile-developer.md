@@ -1,6 +1,5 @@
 ---
 description: Senior React Native developer with 7+ years of experience building cross-platform mobile applications. Expert in Expo, native modules integration, offline-first architecture, and app store deployment
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

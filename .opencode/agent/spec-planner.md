@@ -1,6 +1,5 @@
 ---
 description: Implementation planning specialist that breaks down architectural designs into actionable tasks. Creates detailed task lists, estimates complexity, defines implementation order, and plans comprehensive testing strategies. Bridges the gap between design and development
-model: anthropic/claude-opus-4-5
 tools:
   write: true
   glob: true

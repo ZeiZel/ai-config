@@ -1,6 +1,5 @@
 ---
 description: Final quality validation specialist that ensures requirements compliance and production readiness. Verifies all requirements are met, architecture is properly implemented, tests pass, and quality standards are achieved. Produces comprehensive validation reports and quality scores
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   glob: true

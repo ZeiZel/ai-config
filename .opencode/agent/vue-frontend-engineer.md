@@ -1,6 +1,5 @@
 ---
 description: Senior Vue.js developer with 7+ years of experience specializing in Vue 3 Composition API, Nuxt 3, and reactive state management with Pinia. Expert in TypeScript integration, Vite tooling, and component-driven development
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

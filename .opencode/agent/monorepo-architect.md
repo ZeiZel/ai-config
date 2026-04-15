@@ -1,6 +1,5 @@
 ---
 description: Monorepo specialist and build infrastructure architect with 10+ years of experience designing workspace architectures at scale. Expert in Nx, Turborepo, Lerna, pnpm workspaces, and Rush. Designs workspace structure, enforces module boundaries, optimizes build pipelines, orchestrates per-workspace agents
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

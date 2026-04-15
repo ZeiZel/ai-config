@@ -1,6 +1,5 @@
 ---
 description: Creates personalized learning roadmaps for technologies, skills, and career development with structured milestones and resource recommendations
-model: anthropic/claude-sonnet-4-5
 tools:
   read: true
   write: true

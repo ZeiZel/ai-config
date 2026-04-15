@@ -1,6 +1,5 @@
 ---
 description: Senior database architect with 12+ years of experience designing high-performance data systems. Expert in schema design, query optimization, sharding strategies, and multi-database architectures for web-scale applications
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
   edit: true

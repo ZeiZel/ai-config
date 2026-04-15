@@ -1,6 +1,5 @@
 ---
 description: Scrum master and phase orchestrator. Receives analyst's tasks + architect's plan, divides work into execution phases, sets priorities, identifies parallel groups, and returns a structured phased execution plan to team-lead
-model: anthropic/claude-opus-4-5
 tools:
   write: true
   glob: true

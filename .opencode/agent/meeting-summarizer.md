@@ -1,6 +1,5 @@
 ---
 description: Creates structured meeting summaries with key decisions, action items, and follow-ups from notes, transcripts, or recordings
-model: anthropic/claude-sonnet-4-5
 tools:
   write: true
 ---

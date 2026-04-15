@@ -1,6 +1,5 @@
 ---
 description: Conducts deep web research on topics, synthesizes information from multiple sources, and produces comprehensive research reports
-model: anthropic/claude-sonnet-4-5
 tools:
   webfetch: true
   read: true
