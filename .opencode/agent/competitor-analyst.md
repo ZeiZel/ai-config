@@ -1,8 +1,6 @@
 ---
 description: Analyzes competitors, their products, technologies, pricing strategies, and market positioning to inform business and technical decisions
-model: anthropic/claude-sonnet-4-5
 tools:
-  websearch: true
   webfetch: true
   read: true
   write: true

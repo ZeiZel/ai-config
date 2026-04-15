@@ -1,8 +1,6 @@
 ---
 description: Growth engineering specialist with 8+ years of experience in experimentation infrastructure, A/B testing, and data-driven optimization. Expert in feature flags, funnel analysis, conversion rate optimization, and growth metrics
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true
@@ -11,6 +9,9 @@ tools:
   websearch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Growth Engineer - Experimentation & Optimization Agent

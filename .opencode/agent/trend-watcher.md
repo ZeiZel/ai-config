@@ -1,8 +1,6 @@
 ---
 description: Monitors and analyzes technology trends, emerging tools, and industry shifts to provide forward-looking insights for technical and business decisions
-model: anthropic/claude-sonnet-4-5
 tools:
-  websearch: true
   webfetch: true
   read: true
   write: true

@@ -1,8 +1,6 @@
 ---
 description: Payment systems specialist with 10+ years of experience integrating payment providers and building compliant payment infrastructure. Expert in Stripe, subscription billing, PCI compliance, and fraud prevention
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true

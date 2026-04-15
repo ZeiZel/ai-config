@@ -1,8 +1,6 @@
 ---
 description: Senior Node.js/TypeScript backend developer with 8+ years of experience specializing in NestJS, Express, Fastify, and Bun/Elysia. Expert in building REST/GraphQL APIs, microservices, real-time applications with WebSockets, and event-driven systems with comprehensive type safety and production-grade patterns
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   bash: true
@@ -12,6 +10,9 @@ tools:
   webfetch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Node.js Developer Agent

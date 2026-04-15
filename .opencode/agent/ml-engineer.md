@@ -1,8 +1,6 @@
 ---
 description: Senior ML engineer with 8+ years of experience building production machine learning systems. Expert in ML pipelines, model deployment, LLM integration, and RAG architectures
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true
@@ -11,6 +9,9 @@ tools:
   websearch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # ML Engineer - Machine Learning Operations Agent

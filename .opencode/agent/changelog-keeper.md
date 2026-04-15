@@ -1,11 +1,12 @@
 ---
 description: Maintains CHANGELOG files and release notes by analyzing git history, categorizing changes, and following Keep a Changelog format
-model: anthropic/claude-haiku-4-5
 tools:
-  read: true
   write: true
   edit: true
   bash: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Changelog Keeper

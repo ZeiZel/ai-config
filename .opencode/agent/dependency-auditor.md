@@ -1,10 +1,11 @@
 ---
 description: Audits project dependencies for security vulnerabilities, outdated packages, and license compliance. Expert in npm, pip, cargo, and go modules
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   bash: true
   websearch: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Dependency Auditor

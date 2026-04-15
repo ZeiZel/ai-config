@@ -1,8 +1,6 @@
 ---
 description: Senior C#/.NET developer with 8+ years of experience specializing in .NET 8+, ASP.NET Core, Entity Framework Core, and Minimal APIs. Expert in building enterprise applications, microservices, and cloud-native systems with clean architecture, MediatR/CQRS, dependency injection, and comprehensive testing with xUnit
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   bash: true
@@ -12,6 +10,9 @@ tools:
   webfetch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # .NET Developer Agent

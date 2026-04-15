@@ -3,6 +3,10 @@
 
   "model": "anthropic/claude-sonnet-4-5",
 
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git"
+  ],
+
   "instructions": [
     "docs/Constitution.md",
     ".opencode/instructions/directives.md",
@@ -33,11 +37,16 @@
         "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_TOKEN}"
       },
       "enabled": true
+    },
+    "figma": {
+      "type": "local",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-figma"],
+      "environment": {
+        "FIGMA_ACCESS_TOKEN": "{env:FIGMA_ACCESS_TOKEN}"
+      },
+      "enabled": false,
+      "comment": "Enable after adding FIGMA_ACCESS_TOKEN to environment"
     }
-  },
-
-  "tools": {
-    "mcp_github*": false
   },
 
   "agent": {
@@ -83,6 +92,18 @@
     "security-architect": {
       "model": "anthropic/claude-opus-4-5"
     },
+    "open-pencil-designer": {
+      "model": "anthropic/claude-sonnet-4-5",
+      "tools": {
+        "mcp_figma*": true
+      }
+    },
+    "ui-ux-master": {
+      "model": "anthropic/claude-sonnet-4-5",
+      "tools": {
+        "mcp_figma*": true
+      }
+    },
     "changelog-keeper": {
       "model": "anthropic/claude-haiku-4-5"
     },
@@ -95,6 +116,11 @@
     "readme-generator": {
       "model": "anthropic/claude-haiku-4-5"
     }
+  },
+
+  "tools": {
+    "mcp_github*": false,
+    "mcp_figma*": false
   },
 
   "compaction": {

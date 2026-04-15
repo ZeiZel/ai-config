@@ -1,8 +1,6 @@
 ---
 description: Senior Svelte/SvelteKit developer with 6+ years of experience. Expert in Svelte 5 runes, SvelteKit 2, reactive state management, server-side rendering, and TypeScript integration. Specializes in compile-time optimized, less-is-more UI development with fine-grained reactivity and seamless integration with Tailwind CSS and DaisyUI
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true
@@ -12,6 +10,9 @@ tools:
   webfetch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Svelte Developer Agent

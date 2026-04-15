@@ -1,12 +1,13 @@
 ---
 description: Senior data/product analyst specializing in metrics definition, SQL queries, A/B testing, and data-driven insights
-model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   bash: true
   glob: true
   grep: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Data Analyst Agent

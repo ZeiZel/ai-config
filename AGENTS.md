@@ -1,6 +1,7 @@
 # AI Config
 
-Ansible-based AI development environment: Claude Code agents, MCP servers, RAG infrastructure.
+Multi-platform AI development environment: OpenCode agents, MCP servers, RAG infrastructure.
+Compatible with: **OpenCode** (primary), **Claude Code**, **Gemini CLI**, **Codex**.
 
 ## Quick Reference
 
@@ -11,9 +12,37 @@ Ansible-based AI development environment: Claude Code agents, MCP servers, RAG i
 - **Quality Gates**: `docs/quality-gates.yaml` — workflow quality thresholds
 - **Optimization Plan**: `docs/ai-optimization-plan.md` — current improvement roadmap
 - **Project Config**: `docs/project.yaml` — full project configuration
-- **Agents**: `.claude/agents/` — 60+ agent specifications
-- **Skills**: `.claude/skills/` — 25+ reusable skill definitions
+- **Agents (OpenCode)**: `.opencode/agent/` — 65 agent specifications
+- **Skills (OpenCode)**: `.opencode/skills/` — Superpowers skills (TDD, subagent-driven dev, etc.)
+- **Commands**: `.opencode/commands/` — slash-commands
+- **Instructions**: `.opencode/instructions/` — global context loaded per session
+- **Agents (Claude Code)**: `.claude/agents/` — backward-compatible copies
 - **AI Infrastructure**: `roles/ai/` — Ansible role for Qdrant, MCP servers
+
+## Platform Tool Mapping
+
+| Claude Code tool | OpenCode equivalent |
+|------------------|---------------------|
+| `Skill` tool | `skill` tool (native) |
+| `Agent(subagent_type: "x")` | `@x task description` (@mention syntax) |
+| `Task` tool | `@mention` subagent dispatch |
+| `TodoWrite` | `todowrite` tool |
+| `Read`, `Write`, `Edit`, `Bash` | native tools |
+| `SendMessage` | `sendmessage` tool |
+
+## Subagent Dispatch (OpenCode)
+
+Spawn subagents using `@mention` syntax. Always provide self-contained context:
+
+```
+@spec-developer Implement the auth middleware in src/middleware/auth.ts.
+Requirements: JWT validation, role-based access, refresh token rotation.
+Files to create: src/middleware/auth.ts, src/middleware/auth.test.ts
+Architecture: see docs/artifacts/auth/01-architecture.md
+```
+
+For parallel tasks — use `superpowers:dispatching-parallel-agents` skill.
+For plan execution — use `superpowers:subagent-driven-development` skill.
 
 ## Installation
 
@@ -64,9 +93,41 @@ docker start qdrant                                  # Start if stopped
 
 ## Agent Model Routing
 
-- **opus**: team-lead, spec-analyst, spec-architect, spec-planner, agile-master (planning/specs/architecture)
-- **sonnet**: spec-developer, spec-tester, spec-reviewer, spec-validator, senior-frontend/backend/devops-architect, security-architect (code/execution)
-- **haiku**: changelog-keeper, boilerplate-generator, regex-helper, readme-generator (mechanical)
+- **anthropic/claude-opus-4-5**: spec-analyst, spec-architect, spec-planner, spec-reviewer, agile-master, senior-frontend/backend/devops-architect, security-architect
+- **anthropic/claude-sonnet-4-5**: team-lead, spec-developer, spec-tester, spec-validator + all other implementation agents
+- **anthropic/claude-haiku-4-5**: changelog-keeper, boilerplate-generator, regex-helper, readme-generator (mechanical tasks)
+
+## MCP Servers
+
+| Server | Purpose | Enabled |
+|--------|---------|---------|
+| `context7` | Library documentation lookup | global |
+| `docfork` | MIT library docs, no rate limits | global |
+| `sequential-thinking` | Complex multi-step reasoning | global |
+| `github` | PRs, issues, repos | spec-developer only |
+| `figma` | Design files, components, tokens | design agents only |
+
+**Figma setup**: set `FIGMA_ACCESS_TOKEN` env var and set `"enabled": true` for the figma MCP in `opencode.json`.
+
+## Superpowers Skills
+
+Skills from [obra/superpowers](https://github.com/obra/superpowers) are installed in `.opencode/skills/`.
+Plugin is auto-loaded via `opencode.json`:
+
+```json
+{ "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"] }
+```
+
+Key skills and their triggers:
+- `superpowers:brainstorming` — before any feature design or creative work
+- `superpowers:writing-plans` — when you have a spec and need an implementation plan
+- `superpowers:subagent-driven-development` — executing plans with independent tasks
+- `superpowers:dispatching-parallel-agents` — 2+ independent tasks in parallel
+- `superpowers:test-driven-development` — implementing any feature or fix
+- `superpowers:systematic-debugging` — any bug or unexpected behavior
+- `superpowers:verification-before-completion` — before claiming work is done
+- `superpowers:requesting-code-review` — after completing major feature
+- `superpowers:finishing-a-development-branch` — when implementation is complete
 
 ## Compaction Rules
 
