@@ -2,7 +2,6 @@
 description: Collects, organizes, and summarizes documentation for libraries, APIs, and frameworks from official and community sources
 model: anthropic/claude-sonnet-4-5
 tools:
-  webfetch: true
   read: true
   write: true
   glob: true

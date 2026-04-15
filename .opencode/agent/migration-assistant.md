@@ -2,7 +2,6 @@
 description: Guides version and framework migrations with step-by-step plans, breaking change analysis, and automated code transformations where possible
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   websearch: true

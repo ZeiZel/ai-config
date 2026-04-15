@@ -2,7 +2,6 @@
 description: Senior PHP developer with 8+ years of experience specializing in PHP 8.3+, Laravel 11, Symfony 7, and modern PHP patterns. Expert in building scalable web applications, APIs, and enterprise systems with Eloquent ORM, Doctrine, queue processing, and comprehensive testing with PHPUnit and Pest
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   bash: true
@@ -12,6 +11,9 @@ tools:
   webfetch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # PHP Developer Agent

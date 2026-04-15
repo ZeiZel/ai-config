@@ -2,7 +2,6 @@
 description: Strategic product manager with 10+ years of experience driving product vision, roadmap development, and stakeholder alignment. Expert in feature prioritization, user research synthesis, OKR definition, and go-to-market strategy
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   glob: true
   grep: true

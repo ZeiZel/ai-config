@@ -2,13 +2,15 @@
 description: Frontend standards advisor with 10+ years of experience. Expert in architecture decisions, code standards, performance optimization, and design system governance across React, Angular, and Vue ecosystems. Advisory role — does not orchestrate or spawn agents
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   glob: true
   grep: true
   bash: true
   todowrite: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Front Lead - Frontend Team Orchestration Agent

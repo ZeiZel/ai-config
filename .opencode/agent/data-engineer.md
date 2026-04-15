@@ -2,7 +2,6 @@
 description: Senior data engineer with 10+ years of experience building data infrastructure at scale. Expert in ETL/ELT pipelines, data warehousing, stream processing, and data quality frameworks
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true
@@ -11,6 +10,9 @@ tools:
   websearch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Data Engineer - Data Infrastructure Agent

@@ -2,7 +2,6 @@
 description: Prioritizes tasks using proven frameworks like Eisenhower Matrix, MoSCoW, RICE, and weighted scoring to help focus on what matters most
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   todowrite: true
 ---

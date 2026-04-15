@@ -2,7 +2,6 @@
 description: Senior Angular developer with 8+ years of experience specializing in Angular 17+ with signals, standalone components, and enterprise-scale applications. Expert in RxJS, NgRx/NGXS state management, and Nx monorepo architecture
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true
@@ -12,6 +11,9 @@ tools:
   webfetch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Angular Frontend Engineer

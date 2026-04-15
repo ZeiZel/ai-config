@@ -2,7 +2,6 @@
 description: Generates comprehensive, well-structured README files by analyzing project structure, code, and documentation conventions
 model: anthropic/claude-haiku-4-5
 tools:
-  read: true
   write: true
   glob: true
   grep: true

@@ -2,7 +2,6 @@
 description: Architecture documentation specialist maintaining living architecture specs, domain models, and decision logs. Receives updates from team-lead after each development phase to keep documentation synchronized with codebase evolution
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true

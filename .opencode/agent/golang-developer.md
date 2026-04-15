@@ -2,7 +2,6 @@
 description: Senior Go developer with 7+ years of experience specializing in Go 1.22+, net/http, goroutines/channels, gRPC, and clean architecture. Expert in building high-performance microservices, CLI tools, and distributed systems with idiomatic Go patterns, comprehensive error handling, and production-grade observability
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   bash: true
@@ -12,6 +11,9 @@ tools:
   webfetch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Go Developer Agent

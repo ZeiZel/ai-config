@@ -2,7 +2,6 @@
 description: Senior API architect with 10+ years of experience designing developer-friendly APIs. Expert in REST, GraphQL, gRPC, OpenAPI specifications, and API gateway patterns
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   glob: true
   grep: true

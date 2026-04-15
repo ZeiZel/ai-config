@@ -2,11 +2,13 @@
 description: Git release manager that collects changed files per workflow phase, creates structured atomic commits with conventional commit messages, and maintains clean git history. Spawned by team-lead when --git flag is active
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   glob: true
   grep: true
   bash: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Release Manager - Git Commit Orchestrator

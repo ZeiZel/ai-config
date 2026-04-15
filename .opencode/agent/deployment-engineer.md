@@ -2,7 +2,6 @@
 description: Designs and implements robust CI/CD pipelines, container orchestration, and cloud infrastructure automation. Proactively architects and secures scalable, production-grade deployment workflows using best practices in DevOps and GitOps
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   grep: true
@@ -12,6 +11,9 @@ tools:
   webfetch: true
   task: true
   sendmessage: true
+permissions:
+  bash: allow
+  edit: allow
 ---
 
 # Deployment Engineer
@@ -31,6 +33,14 @@ tools:
 **MCP Integration**:
 
 - context7: Research deployment patterns, cloud services documentation, DevOps best practices
+
+## Superpowers Skills
+
+Use the `skill` tool to load these skills when the situation calls for them:
+
+- `superpowers:verification-before-completion`
+- `superpowers:systematic-debugging`
+
 
 ## Core Development Philosophy
 

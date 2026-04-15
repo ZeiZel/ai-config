@@ -2,7 +2,6 @@
 description: Technical documentation specialist with 8+ years creating developer-focused documentation. Expert in API docs, architecture diagrams, runbooks, and documentation-as-code workflows
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
   edit: true
   glob: true

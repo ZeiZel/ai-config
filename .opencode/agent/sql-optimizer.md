@@ -2,7 +2,6 @@
 description: Optimizes SQL queries for performance, suggests indexes, and identifies common anti-patterns across PostgreSQL, MySQL, and other databases
 model: anthropic/claude-sonnet-4-5
 tools:
-  read: true
   write: true
 ---
 
