@@ -27,6 +27,12 @@
       },
       "description": "GitHub integration - PRs, issues, repos"
     },
+    "fetch": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"],
+      "description": "Web fetch - arbitrary HTTP GET/POST requests"
+    },
     "qdrant-mcp": {
       "type": "stdio",
       "command": "uvx",

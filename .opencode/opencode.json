@@ -1,0 +1,162 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+
+  "plugin": [
+    "superpowers@git+https://github.com/obra/superpowers.git",
+    "AVIDS2/memorix@git+https://github.com/AVIDS2/memorix.git",
+    "opencode-type-inject",
+    "opencode-shell-strategy",
+    "opencode-dynamic-context-pruning",
+    "opencode-worktree",
+    "opencode-notifier",
+    "opencode-websearch-cited",
+    "opencode-pty",
+    "opencode-vibeguard"
+  ],
+
+  "instructions": [
+    "docs/Constitution.md",
+    "./instructions/directives.md",
+    "./instructions/team-comms.md",
+    "./instructions/rag-context.md"
+  ],
+
+  "mcp": {
+    "context7": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@upstash/context7-mcp"],
+      "description": "Library documentation lookup — up-to-date docs for any npm package",
+      "enabled": true
+    },
+    "docfork": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "docfork"],
+      "description": "Docs lookup via docfork",
+      "enabled": true
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "description": "Step-by-step reasoning for complex tasks",
+      "enabled": true
+    },
+    "fetch": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@modelcontextprotocol/server-fetch"],
+      "description": "Web fetch — arbitrary HTTP GET/POST requests",
+      "enabled": true
+    },
+    "figma-bridge": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@gethopp/figma-mcp-bridge"],
+      "description": "Figma design inspection and asset export",
+      "enabled": true
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "--init", "--pull=always", "mcr.microsoft.com/playwright/mcp"],
+      "description": "Browser automation — E2E testing, scraping, screenshots via Playwright",
+      "enabled": true
+    },
+    "filesystem": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "-v", "{env:PWD}:/workspace", "oven/bun", "bunx", "-y", "@modelcontextprotocol/server-filesystem", "/workspace"],
+      "description": "Filesystem access — read/write/search files in project",
+      "enabled": true
+    },
+    "docker": {
+      "type": "local",
+      "command": ["docker", "run", "--rm", "-i", "-v", "/var/run/docker.sock:/var/run/docker.sock", "oven/bun", "bunx", "-y", "docker-mcp"],
+      "description": "Docker management — containers, images, volumes, networks",
+      "enabled": true
+    }
+  },
+
+  "agent": {
+    "team-lead": {},
+    "spec-analyst": {},
+    "spec-architect": {},
+    "spec-planner": {},
+    "agile-master": {},
+    "spec-developer": {
+      "tools": {
+        "mcp_github*": true,
+        "mcp_gitlab*": true,
+        "mcp_playwright*": true,
+        "mcp_postgres*": true,
+        "mcp_filesystem*": true
+      }
+    },
+    "spec-reviewer": {
+      "tools": {
+        "mcp_github*": true,
+        "mcp_gitlab*": true
+      }
+    },
+    "spec-tester": {
+      "tools": {
+        "mcp_playwright*": true,
+        "mcp_filesystem*": true
+      }
+    },
+    "spec-validator": {
+      "tools": {
+        "mcp_playwright*": true
+      }
+    },
+    "senior-frontend-architect": {
+      "tools": {
+        "mcp_playwright*": true,
+        "mcp_figma*": true
+      }
+    },
+    "senior-backend-architect": {
+      "tools": {
+        "mcp_postgres*": true,
+        "mcp_docker*": true
+      }
+    },
+    "senior-devops-architect": {
+      "tools": {
+        "mcp_docker*": true,
+        "mcp_gitlab*": true
+      }
+    },
+    "security-architect": {
+      "tools": {
+        "mcp_filesystem*": true
+      }
+    },
+    "open-pencil-designer": {
+      "tools": {
+        "mcp_figma*": true
+      }
+    },
+    "ui-ux-master": {
+      "tools": {
+        "mcp_figma*": true,
+        "mcp_playwright*": true
+      }
+    },
+    "changelog-keeper": {
+      "tools": {
+        "mcp_github*": true,
+        "mcp_gitlab*": true
+      }
+    },
+    "boilerplate-generator": {},
+    "regex-helper": {},
+    "readme-generator": {}
+  },
+
+  "tools": {
+    "mcp_figma*": true,
+    "mcp_playwright*": true,
+    "mcp_docker*": true
+  },
+
+  "compaction": {
+    "auto": true,
+    "prune": true
+  }
+}

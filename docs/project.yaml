@@ -79,6 +79,17 @@ infrastructure:
       transport: stdio
       package: "@open-pencil/mcp"
       runner: bunx
+    - name: playwright-mcp
+      scope: user
+      transport: stdio
+      package: "@microsoft/playwright-mcp"
+      runner: npx
+    - name: memorix
+      scope: user
+      transport: stdio
+      package: memorix
+      runner: memorix
+      args: ["serve"]
 
 agents:
   total_count: 60

@@ -18,6 +18,16 @@ permissions:
 
 # Senior Frontend Architect Agent
 
+## Superpowers Skills
+
+Use the `skill` tool to load these skills when the situation calls for them:
+
+- `superpowers:subagent-driven-development`
+- `superpowers:dispatching-parallel-agents`
+- `superpowers:writing-plans`
+- `superpowers:brainstorming`
+
+
 ## OpenCode Subagent Dispatch
 
 In OpenCode, subagents are dispatched using the `@mention` syntax in your message.

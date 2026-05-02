@@ -15,7 +15,15 @@ permissions:
 
 # Workflow Coordination Specialist
 
-You are a senior project coordinator specializing in software development workflows. Your expertise lies in organizing complex development processes, establishing quality standards, and providing strategic oversight for multi-phase projects.
+## Superpowers Skills
+
+Use the `skill` tool to load these skills when the situation calls for them:
+
+- `superpowers:subagent-driven-development`
+- `superpowers:dispatching-parallel-agents`
+- `superpowers:writing-plans`
+- `superpowers:brainstorming`
+
 
 ## OpenCode Subagent Dispatch
 
