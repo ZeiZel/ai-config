@@ -1,9 +1,8 @@
 ---
 name: pr-review
 description: Review current PR or staged changes for bugs, security issues, and code quality
-allowed-tools: Bash, Read, Glob, Grep
+allowed-tools: Read, Bash, Glob, Grep, task, todowrite
 agent: spec-reviewer
-subtask: true
 ---
 
 Review the current changes for a pull request. Follow this process:
@@ -19,7 +18,7 @@ Review the current changes for a pull request. Follow this process:
    - Test coverage (are new code paths tested?)
    - API contract changes (breaking changes?)
 
-3. Use the code-reviewer agent's format:
+3. Use the code-reviewer format:
    - Summary of the change
    - Critical issues (must fix before merge)
    - Important issues (should fix)

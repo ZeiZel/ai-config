@@ -1,5 +1,11 @@
 ---
 description: Scrum master and phase orchestrator. Receives analyst's tasks + architect's plan, divides work into execution phases, sets priorities, identifies parallel groups, and returns a structured phased execution plan to team-lead
+category: orchestration
+capabilities:
+  - Sprint and phase planning
+  - Parallel execution group identification
+  - Priority setting and task sequencing
+  - Workflow template selection
 tools:
   write: true
   glob: true
@@ -10,7 +16,6 @@ tools:
   sendmessage: true
 permissions:
   bash: allow
-  edit: allow
 ---
 
 # Agile Master - Phase Orchestrator & Scrum Agent

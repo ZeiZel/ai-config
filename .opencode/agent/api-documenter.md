@@ -1,5 +1,10 @@
 ---
 description: Creates OpenAPI/Swagger specifications from code analysis, generating accurate API documentation with examples and schemas
+category: documentation
+capabilities:
+  - OpenAPI/Swagger specification generation
+  - API documentation with examples
+  - Schema definition from code analysis
 tools:
   write: true
   glob: true

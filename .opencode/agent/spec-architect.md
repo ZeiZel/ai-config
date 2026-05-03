@@ -1,5 +1,11 @@
 ---
 description: System architect specializing in technical design. Creates architecture, makes technology decisions, AND returns an implementation plan with a REQUIRED AGENTS LIST — telling team-lead exactly which agents to spawn and what context they need
+category: spec-agents
+capabilities:
+  - System architecture design
+  - Technology selection and decision-making
+  - Implementation planning with agent assignment
+  - Technical specification authoring
 tools:
   write: true
   glob: true

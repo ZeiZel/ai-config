@@ -24,6 +24,15 @@
 .claude/settings.json
 .claude/teams/
 
+# Sisyphus plans and drafts (local, not for publication)
+.sisyphus/plans/
+.sisyphus/drafts/
+
+# Claude/agent transcripts (session recordings, not for publication)
+transcripts/
+.claude/transcripts/
+.opencode/transcripts/
+
 # Context snapshots (regenerated via repomix)
 docs/context/codebase-snapshot.txt
 

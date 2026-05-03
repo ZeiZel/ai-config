@@ -90,17 +90,17 @@ else
 fi
 
 # Check user-scope settings for qdrant-mcp and code-index-mcp
-if [ -f ~/.claude/settings.json ]; then
-  grep -q "qdrant-mcp" ~/.claude/settings.json \
+if [ -f .opencode/opencode.json ]; then
+  grep -q "qdrant-mcp" .opencode/opencode.json \
     && echo "✓ qdrant-mcp configured at user scope" \
     || echo "⚠ qdrant-mcp not found at user scope — RAG unavailable"
-  grep -q "code-index-mcp" ~/.claude/settings.json \
+  grep -q "code-index-mcp" .opencode/opencode.json \
     && echo "✓ code-index-mcp configured at user scope" \
     || echo "⚠ code-index-mcp not found — semantic code search unavailable"
 fi
 ```
 
-**Auto-fix suggestion**: If qdrant-mcp or code-index-mcp are missing, run `setup-ai.sh` from dotfiles or add manually via `claude mcp add --scope user`.
+**Auto-fix suggestion**: If qdrant-mcp or code-index-mcp are missing, run `setup-ai.sh` from dotfiles or add manually to `.opencode/opencode.json` mcp section.
 
 #### 2. Qdrant Health [pre-existing — required only if using RAG]
 
@@ -204,7 +204,7 @@ Only run if both `docs/project.yaml` and a qdrant-mcp config exist:
 grep "embedding_model" docs/project.yaml 2>/dev/null
 
 # Model configured in qdrant-mcp server (user or project scope)
-grep -r "EMBEDDING_MODEL" ~/.claude/settings.json .mcp.json 2>/dev/null
+grep -r "EMBEDDING_MODEL" .opencode/opencode.json .mcp.json 2>/dev/null
 ```
 
 **If mismatch**: Qdrant vectors and qdrant-mcp search live in different embedding spaces — semantic search returns garbage. Not auto-fixable: either re-index with correct model or update qdrant-mcp `EMBEDDING_MODEL` env var.
@@ -508,7 +508,7 @@ These directories contain:
 }
 ```
 
-**Note**: `qdrant-mcp` and `code-index-mcp` are configured at user scope (via `claude mcp add`), not per-project. They are provisioned by the `ai` Ansible role (`setup-ai.sh`). If not available, project-setup will warn and fall back to repomix strategy.
+**Note**: `qdrant-mcp` and `code-index-mcp` are configured in `.opencode/opencode.json` mcp section. They are provisioned by the `ai` Ansible role (`setup-ai.sh`). If not available, project-setup will warn and fall back to repomix strategy.
 
 Generate `docs/quality-gates.yaml`:
 ```yaml

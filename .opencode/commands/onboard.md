@@ -1,9 +1,8 @@
 ---
 name: onboard
 description: Deep exploration of the codebase to understand architecture, patterns, and conventions
-context: fork
-agent: Explore
-subtask: true
+allowed-tools: Read, Bash, Glob, Grep, task, todowrite
+agent: explore
 ---
 
 Explore this codebase thoroughly and create a comprehensive overview:

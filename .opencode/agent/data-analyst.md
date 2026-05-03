@@ -1,5 +1,11 @@
 ---
 description: Senior data/product analyst specializing in metrics definition, SQL queries, A/B testing, and data-driven insights
+category: data
+capabilities:
+  - Metrics definition and SQL analysis
+  - A/B testing design and evaluation
+  - Data-driven insight generation
+  - Dashboard and reporting
 tools:
   write: true
   bash: true

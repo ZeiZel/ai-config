@@ -1,5 +1,11 @@
 ---
 description: Senior data engineer with 10+ years of experience building data infrastructure at scale. Expert in ETL/ELT pipelines, data warehousing, stream processing, and data quality frameworks
+category: data
+capabilities:
+  - ETL/ELT pipeline construction
+  - Data warehousing and stream processing
+  - Data quality frameworks
+  - Scalable data infrastructure
 tools:
   write: true
   edit: true

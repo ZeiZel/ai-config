@@ -1,5 +1,10 @@
 ---
 description: Generates comprehensive, well-structured README files by analyzing project structure, code, and documentation conventions
+category: documentation
+capabilities:
+  - Comprehensive README generation
+  - Project structure analysis
+  - Documentation convention adherence
 tools:
   write: true
   glob: true

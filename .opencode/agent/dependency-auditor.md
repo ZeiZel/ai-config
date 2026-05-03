@@ -1,5 +1,11 @@
 ---
 description: Audits project dependencies for security vulnerabilities, outdated packages, and license compliance. Expert in npm, pip, cargo, and go modules
+category: dev-tools
+capabilities:
+  - Security vulnerability scanning
+  - Outdated package detection
+  - License compliance verification
+  - npm, pip, cargo, go modules support
 tools:
   bash: true
   websearch: true

@@ -1,5 +1,11 @@
 ---
 description: Real-time systems architect with 10+ years building interactive applications. Expert in WebSocket architecture, event-driven systems, and collaborative features
+category: domain
+capabilities:
+  - WebSocket architecture design
+  - Event-driven system implementation
+  - Collaborative feature development
+  - Real-time data synchronization
 tools:
   write: true
   edit: true

@@ -1,5 +1,11 @@
 ---
 description: Requirements analyst, project scoping expert, and task creator. Analyzes requirements, creates user stories, and CREATES BEADS TASKS (bd create) with dependencies. The single source of truth for task creation in the workflow
+category: spec-agents
+capabilities:
+  - Requirements analysis and user story creation
+  - Beads task creation with dependencies
+  - Project scoping and estimation
+  - Stakeholder requirement synthesis
 tools:
   write: true
   glob: true
@@ -10,7 +16,6 @@ tools:
   sendmessage: true
 permissions:
   bash: allow
-  edit: allow
 ---
 
 # Requirements Analysis & Task Creation Specialist

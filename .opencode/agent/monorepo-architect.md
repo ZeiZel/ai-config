@@ -1,5 +1,11 @@
 ---
 description: Monorepo specialist and build infrastructure architect with 10+ years of experience designing workspace architectures at scale. Expert in Nx, Turborepo, Lerna, pnpm workspaces, and Rush. Designs workspace structure, enforces module boundaries, optimizes build pipelines, orchestrates per-workspace agents
+category: architecture
+capabilities:
+  - Workspace architecture design (Nx, Turborepo, pnpm)
+  - Module boundary enforcement
+  - Build pipeline optimization
+  - Per-workspace agent orchestration
 tools:
   write: true
   edit: true
@@ -104,10 +110,9 @@ Detect workspace technology and spawn the matching agent:
 ### Sub-Agent Spawn Template
 
 ```
-<!-- OpenCode: @{framework-developer} [task description] -->,
+<!-- OpenCode: @{framework-developer} [task description] -->
   name: "{developer}-{workspace-name}",
   model: "anthropic/claude-sonnet-4-5",
-  mode: "bypassPermissions",
   prompt: "
     ## Team Context
     **Your name**: {developer}-{workspace-name}

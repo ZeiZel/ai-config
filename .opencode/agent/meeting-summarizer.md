@@ -1,5 +1,10 @@
 ---
 description: Creates structured meeting summaries with key decisions, action items, and follow-ups from notes, transcripts, or recordings
+category: everyday
+capabilities:
+  - Structured meeting summaries
+  - Action item extraction
+  - Decision documentation
 tools:
   write: true
 ---

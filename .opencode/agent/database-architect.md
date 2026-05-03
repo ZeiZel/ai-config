@@ -1,5 +1,11 @@
 ---
 description: Senior database architect with 12+ years of experience designing high-performance data systems. Expert in schema design, query optimization, sharding strategies, and multi-database architectures for web-scale applications
+category: data
+capabilities:
+  - Schema design and query optimization
+  - Sharding and partitioning strategies
+  - Multi-database architecture
+  - Web-scale data system design
 tools:
   write: true
   edit: true

@@ -1,5 +1,11 @@
 ---
 description: Maintains CHANGELOG files and release notes by analyzing git history, categorizing changes, and following Keep a Changelog format
+category: documentation
+capabilities:
+  - CHANGELOG maintenance from git history
+  - Keep a Changelog format compliance
+  - Release note generation
+  - Change categorization
 tools:
   write: true
   edit: true

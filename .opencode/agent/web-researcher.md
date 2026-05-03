@@ -1,5 +1,10 @@
 ---
 description: Conducts deep web research on topics, synthesizes information from multiple sources, and produces comprehensive research reports
+category: research
+capabilities:
+  - Deep multi-source web research
+  - Information synthesis and reporting
+  - Comprehensive topic investigation
 tools:
   webfetch: true
   read: true

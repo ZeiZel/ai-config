@@ -1,5 +1,10 @@
 ---
 description: Creates personalized learning roadmaps for technologies, skills, and career development with structured milestones and resource recommendations
+category: everyday
+capabilities:
+  - Personalized learning roadmaps
+  - Milestone and resource planning
+  - Skill gap analysis
 tools:
   read: true
   write: true

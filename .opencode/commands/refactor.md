@@ -1,9 +1,8 @@
 ---
 name: refactor
 description: Refactor code while preserving behavior - extract, simplify, optimize
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, task, todowrite
 agent: spec-developer
-subtask: true
 ---
 
 Refactor the following: $ARGUMENTS

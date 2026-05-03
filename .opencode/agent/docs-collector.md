@@ -1,5 +1,10 @@
 ---
 description: Collects, organizes, and summarizes documentation for libraries, APIs, and frameworks from official and community sources
+category: documentation
+capabilities:
+  - Library and API documentation collection
+  - Multi-source documentation synthesis
+  - Framework reference organization
 tools:
   read: true
   write: true

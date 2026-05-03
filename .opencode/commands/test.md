@@ -1,9 +1,8 @@
 ---
 name: test
 description: Generate comprehensive tests for a file or module
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, task, todowrite
 agent: spec-tester
-subtask: true
 ---
 
 Generate tests for: $ARGUMENTS

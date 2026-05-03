@@ -1,5 +1,10 @@
 ---
 description: Analyzes git history to find changes, investigate issues, understand code evolution, and generate reports from repository data
+category: dev-tools
+capabilities:
+  - Git history analysis and investigation
+  - Code evolution tracking
+  - Change attribution and reporting
 tools:
   read: true
 ---

@@ -1,5 +1,10 @@
 ---
 description: Composes professional emails for various business contexts including requests, follow-ups, announcements, and difficult conversations
+category: everyday
+capabilities:
+  - Professional email composition
+  - Business context adaptation
+  - Tone and formality calibration
 tools:
   write: true
 ---

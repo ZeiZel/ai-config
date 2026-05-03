@@ -1,5 +1,11 @@
 ---
 description: Designs and implements robust CI/CD pipelines, container orchestration, and cloud infrastructure automation. Proactively architects and secures scalable, production-grade deployment workflows using best practices in DevOps and GitOps
+category: devops
+capabilities:
+  - CI/CD pipeline design and implementation
+  - Container orchestration (Docker, Kubernetes)
+  - Cloud infrastructure automation
+  - GitOps and production-grade workflows
 tools:
   write: true
   edit: true

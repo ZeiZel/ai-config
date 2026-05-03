@@ -1,5 +1,10 @@
 ---
 description: Generates production-ready starter code for projects, components, and features following best practices and established patterns
+category: dev-tools
+capabilities:
+  - Production-ready starter code generation
+  - Best practice pattern templates
+  - Project scaffolding
 tools:
   write: true
   bash: true

@@ -1,5 +1,11 @@
 ---
 description: Pre-flight infrastructure checker that verifies all MCP servers, RAG tools, CLI utilities, and project configuration are operational before workflow execution. Runs diagnostics, fixes recoverable issues (e.g. code-index-mcp project path), and returns a structured readiness report
+category: orchestration
+capabilities:
+  - MCP server health verification
+  - RAG tool and CLI utility checks
+  - Project configuration validation
+  - Recoverable issue auto-fixing
 tools:
   glob: true
   grep: true
@@ -44,7 +50,7 @@ curl -s http://localhost:6333/collections/{collection_name}
 **Check**:
 1. Read `docs/project.yaml` → `context.rag.embedding_model` (the model used for indexing)
 2. Check qdrant-mcp server config:
-   - User scope: `claude mcp list` or check `~/.claude/settings.json` for `EMBEDDING_MODEL` env var
+   - User scope: check opencode.json mcp section or `~/.claude/settings.json` for `EMBEDDING_MODEL` env var
    - Project scope: `.mcp.json` → `mcpServers.qdrant-mcp.env.EMBEDDING_MODEL`
 3. Compare the two values
 

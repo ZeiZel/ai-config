@@ -1,9 +1,8 @@
 ---
 name: implement
 description: Implement a feature with planning, tests, and clean code
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, task, todowrite
 agent: spec-developer
-subtask: true
 ---
 
 Implement the following feature: $ARGUMENTS

@@ -19,7 +19,7 @@ Initializes RAG (Retrieval Augmented Generation) infrastructure for a project th
 
 RAG infrastructure is provisioned at **user scope** by the `roles/ai/` Ansible role:
 - Qdrant container: `docker start qdrant` (port 6333/6334)
-- MCP servers: `claude mcp add` at user scope (qdrant-mcp, code-index-mcp)
+- MCP servers: add to `.opencode/opencode.json` mcp section (qdrant-mcp, code-index-mcp)
 - FastEmbed model: pre-downloaded by Ansible
 
 If not provisioned, this skill will guide the user through setup.
@@ -90,7 +90,7 @@ Check if qdrant-mcp is available. It should be configured at **user scope** (via
 
 ```bash
 # Check user-scope MCP servers
-claude mcp list 2>/dev/null | grep -i qdrant
+python3 -c "import json; d=json.load(open('.opencode/opencode.json')); print(d.get('mcp',{}).get('qdrant-mcp',''))" 2>/dev/null
 ```
 
 If not configured at user scope AND not in project .mcp.json:

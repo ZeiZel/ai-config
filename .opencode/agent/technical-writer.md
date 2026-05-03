@@ -1,5 +1,11 @@
 ---
 description: Technical documentation specialist with 8+ years creating developer-focused documentation. Expert in API docs, architecture diagrams, runbooks, and documentation-as-code workflows
+category: documentation
+capabilities:
+  - API documentation authoring
+  - Architecture diagram creation
+  - Runbook and guide writing
+  - Documentation-as-code workflows
 tools:
   write: true
   edit: true

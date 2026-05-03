@@ -1,5 +1,11 @@
 ---
 description: Architecture documentation specialist maintaining living architecture specs, domain models, and decision logs. Receives updates from team-lead after each development phase to keep documentation synchronized with codebase evolution
+category: documentation
+capabilities:
+  - Living architecture documentation
+  - Domain model maintenance
+  - Decision log management
+  - Codebase-documentation synchronization
 tools:
   write: true
   edit: true

@@ -1,5 +1,11 @@
 ---
 description: Senior code reviewer specializing in code quality, best practices, and security. Reviews code for maintainability, performance optimizations, and potential vulnerabilities. Provides actionable feedback and can refactor code directly. Works with all specialized agents to ensure consistent quality
+category: spec-agents
+capabilities:
+  - Code quality and best practice review
+  - Security vulnerability identification
+  - Performance optimization suggestions
+  - Actionable refactoring feedback
 tools:
   write: true
   edit: true

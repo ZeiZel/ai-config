@@ -1,5 +1,11 @@
 ---
 description: Analyzes competitors, their products, technologies, pricing strategies, and market positioning to inform business and technical decisions
+category: research
+capabilities:
+  - Competitive product analysis
+  - Technology stack comparison
+  - Pricing strategy evaluation
+  - Market positioning assessment
 tools:
   webfetch: true
   read: true

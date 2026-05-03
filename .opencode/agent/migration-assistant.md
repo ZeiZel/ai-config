@@ -1,5 +1,10 @@
 ---
 description: Guides version and framework migrations with step-by-step plans, breaking change analysis, and automated code transformations where possible
+category: dev-tools
+capabilities:
+  - Version and framework migration planning
+  - Breaking change analysis
+  - Automated code transformation
 tools:
   write: true
   edit: true

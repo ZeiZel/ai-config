@@ -1,5 +1,11 @@
 ---
 description: Monitors and analyzes technology trends, emerging tools, and industry shifts to provide forward-looking insights for technical and business decisions
+category: research
+capabilities:
+  - Technology trend monitoring
+  - Emerging tool analysis
+  - Industry shift identification
+  - Forward-looking insights
 tools:
   webfetch: true
   read: true

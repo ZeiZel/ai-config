@@ -1,5 +1,11 @@
 ---
 description: Git release manager that collects changed files per workflow phase, creates structured atomic commits with conventional commit messages, and maintains clean git history. Spawned by team-lead when --git flag is active
+category: orchestration
+capabilities:
+  - Git release management
+  - Atomic commit creation with conventional messages
+  - Workflow phase file collection
+  - Clean git history maintenance
 tools:
   glob: true
   grep: true

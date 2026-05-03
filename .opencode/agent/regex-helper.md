@@ -1,5 +1,10 @@
 ---
 description: Creates, explains, and tests regular expressions with clear breakdowns and practical examples for various use cases
+category: dev-tools
+capabilities:
+  - Regular expression creation and testing
+  - Pattern explanation and breakdown
+  - Practical regex examples
 tools:
   write: true
 ---

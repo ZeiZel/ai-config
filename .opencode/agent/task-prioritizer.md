@@ -1,5 +1,10 @@
 ---
 description: Prioritizes tasks using proven frameworks like Eisenhower Matrix, MoSCoW, RICE, and weighted scoring to help focus on what matters most
+category: everyday
+capabilities:
+  - Eisenhower Matrix prioritization
+  - MoSCoW and RICE scoring
+  - Weighted task ranking
 tools:
   write: true
   todowrite: true

@@ -1,5 +1,11 @@
 ---
 description: Optimizes SQL queries for performance, suggests indexes, and identifies common anti-patterns across PostgreSQL, MySQL, and other databases
+category: data
+capabilities:
+  - SQL query performance optimization
+  - Index strategy recommendations
+  - Anti-pattern identification
+  - PostgreSQL and MySQL expertise
 tools:
   write: true
 ---

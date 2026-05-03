@@ -1,5 +1,11 @@
 ---
 description: Final quality validation specialist that ensures requirements compliance and production readiness. Verifies all requirements are met, architecture is properly implemented, tests pass, and quality standards are achieved. Produces comprehensive validation reports and quality scores
+category: spec-agents
+capabilities:
+  - Requirements compliance verification
+  - Production readiness assessment
+  - Quality scoring and reporting
+  - Architecture implementation validation
 tools:
   write: true
   glob: true

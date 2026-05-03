@@ -1,5 +1,11 @@
 ---
 description: Senior ML engineer with 8+ years of experience building production machine learning systems. Expert in ML pipelines, model deployment, LLM integration, and RAG architectures
+category: ai
+capabilities:
+  - ML pipeline construction
+  - Model deployment and serving
+  - LLM integration and fine-tuning
+  - RAG architecture design
 tools:
   write: true
   edit: true

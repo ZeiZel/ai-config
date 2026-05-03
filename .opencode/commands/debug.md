@@ -1,9 +1,8 @@
 ---
 name: debug
 description: Systematically debug an issue by reproducing, isolating, and fixing it
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, task, todowrite
 agent: spec-developer
-subtask: true
 ---
 
 Debug the following issue: $ARGUMENTS

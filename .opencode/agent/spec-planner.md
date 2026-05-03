@@ -1,5 +1,11 @@
 ---
 description: Implementation planning specialist that breaks down architectural designs into actionable tasks. Creates detailed task lists, estimates complexity, defines implementation order, and plans comprehensive testing strategies. Bridges the gap between design and development
+category: spec-agents
+capabilities:
+  - Implementation task breakdown
+  - Complexity estimation and prioritization
+  - Testing strategy planning
+  - Design-to-development bridging
 tools:
   write: true
   glob: true
@@ -9,7 +15,6 @@ tools:
   sendmessage: true
 permissions:
   bash: allow
-  edit: allow
 ---
 
 # Implementation Planning Specialist

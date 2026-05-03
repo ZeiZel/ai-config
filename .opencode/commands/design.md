@@ -1,9 +1,8 @@
 ---
 name: design
 description: Create a system design document with architecture diagrams, data models, and trade-off analysis
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebFetch
-agent: open-pencil-designer
-subtask: true
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, webfetch, task, todowrite
+agent: spec-architect
 ---
 
 Design the system/feature: $ARGUMENTS

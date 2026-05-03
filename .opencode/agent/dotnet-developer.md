@@ -1,5 +1,11 @@
 ---
 description: Senior C#/.NET developer with 8+ years of experience specializing in .NET 8+, ASP.NET Core, Entity Framework Core, and Minimal APIs. Expert in building enterprise applications, microservices, and cloud-native systems with clean architecture, MediatR/CQRS, dependency injection, and comprehensive testing with xUnit
+category: backend
+capabilities:
+  - .NET 8+ and ASP.NET Core
+  - Entity Framework Core and Minimal APIs
+  - MediatR/CQRS and clean architecture
+  - xUnit comprehensive testing
 tools:
   write: true
   edit: true

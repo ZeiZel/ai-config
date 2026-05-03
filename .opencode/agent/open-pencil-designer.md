@@ -1,5 +1,11 @@
 ---
 description: Design agent specializing in OpenPencil — creates, modifies, and exports designs via MCP. Handles Figma-to-OpenPencil imports, design token extraction, asset export, and design iteration based on feedback. Bridges the gap between design vision and frontend implementation
+category: ui-ux
+capabilities:
+  - OpenPencil design creation and modification
+  - Figma-to-OpenPencil import
+  - Design token extraction
+  - Design-to-frontend handoff
 tools:
   write: true
   edit: true
@@ -169,7 +175,7 @@ SendMessage(to: "team-lead", message: "DONE: Design work completed.
 
 | Error | Action |
 |-------|--------|
-| OpenPencil MCP unavailable | Report BLOCKER, suggest checking `claude mcp list` |
+| OpenPencil MCP unavailable | Report BLOCKER, suggest checking opencode.json mcp configuration |
 | Figma API rate limited | Report BLOCKER, wait and retry |
 | .fig file corrupted | Report BLOCKER, suggest re-import from Figma |
 | Design token conflict | Report SUGGESTION with resolution options |

@@ -258,7 +258,7 @@ workflow_templates:
     quality: 75
 
 rag:
-  enabled: false
+  enabled: true
   collection: codebase
   embedding_model: paraphrase-multilingual-MiniLM-L12-v2
   embedding_dim: 384

@@ -95,7 +95,7 @@ The release-manager agent definition: `.claude/agents/orchestration/release-mana
 When `--unlimited` is present, the token budget mid-check (Check 1) is disabled.
 Team-lead runs all phases regardless of token consumption.
 
-Without this flag (default), team-lead reads `~/.claude/session-usage.json`
+Without this flag (default), team-lead reads `~/.opencode/session-usage.json`
 at each mid-check point. If the 5-hour rate limit exceeds 60%, it stops
 and preserves remaining budget for interactive work.
 
@@ -142,9 +142,13 @@ git_mode = "--git" in [User's arguments]
 unlimited_mode = "--unlimited" in [User's arguments]
 user_request = [User's arguments with --git and --unlimited removed]
 
-subagent_type: team-lead
-mode: "bypassPermissions"
-prompt: |
+Execute the team-lead agent via OpenCode dispatch:
+```
+@team-lead
+```
+Or via task() for programmatic:
+```
+task(subagent_type="team-lead", load_skills=["teamlead"], description="Orchestrate feature", prompt="
   REMINDER: You are a PURE ORCHESTRATOR. You delegate ALL work to agents.
   You NEVER do work yourself — not even "small" or "obvious" tasks.
   Before every action, ask: "Am I spawning an agent or routing context?"
@@ -156,9 +160,9 @@ prompt: |
 
   {if NOT unlimited_mode}
   ## TOKEN BUDGET CHECK (limit: 60%)
-  Before each phase (steps 3-9), read `~/.claude/session-usage.json` via Bash:
+  Before each phase (steps 3-9), read `~/.opencode/session-usage.json` via Bash:
   ```bash
-  cat ~/.claude/session-usage.json 2>/dev/null || echo '{"five_hour_pct":0}'
+  cat ~/.opencode/session-usage.json 2>/dev/null || echo '{"five_hour_pct":0}'
   ```
   - `five_hour_pct` > 60 → STOP, report completed/pending phases,
     suggest `/teamlead --unlimited` or wait for rate limit reset.
@@ -173,31 +177,14 @@ prompt: |
   After EACH execution phase completes and after the quality fix loop,
   spawn a `release-manager` agent to commit that phase's changes.
 
-  Release manager spawn template (use Agent tool, NOT Bash/CLI):
-  Agent(
-    subagent_type: "release-manager",
-    name: "release-mgr-phase-{N}",
-    model: "sonnet",
-    mode: "bypassPermissions",
-    prompt: "
-      ## Team Context
-      **Your name**: release-mgr-phase-{N}
-      **Team Lead**: team-lead
-      **Protocol**: QUESTION / BLOCKER / DONE / SUGGESTION via SendMessage
-
-      ## Task
-      Create git commits for the completed phase.
-
-      Phase: {phase_name}
-      Tasks: {task IDs completed in this phase}
-      Task descriptions: {brief descriptions}
-      Workflow: {workflow-id}
-      Artifact dir: docs/artifacts/{workflow-id}/
-
-      Collect changed files, group by logical unit, create atomic
-      conventional commits. Report back commit hashes.
-    "
-  )
+  Release manager dispatch:
+  ```
+  @release-manager Create git commits for Phase {phase_name}.
+  Tasks: {task IDs}. Workflow: {workflow-id}.
+  Artifact dir: docs/artifacts/{workflow-id}/
+  Collect changed files, group by logical unit, create atomic conventional commits.
+  Report back commit hashes.
+  ```
 
   IMPORTANT: Do NOT commit all changes at once at the end.
   Commit AFTER EACH PHASE so the git history reflects the workflow phases.

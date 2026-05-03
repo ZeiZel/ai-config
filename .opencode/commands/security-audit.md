@@ -1,9 +1,8 @@
 ---
 name: security-audit
 description: Audit codebase for security vulnerabilities - OWASP Top 10, dependency CVEs, secrets, misconfigurations
-allowed-tools: Bash, Read, Glob, Grep
+allowed-tools: Read, Write, Edit, Bash, Glob, Grep, task, todowrite
 agent: security-architect
-subtask: true
 ---
 
 Perform a security audit of this codebase. Check:
@@ -31,7 +30,7 @@ Perform a security audit of this codebase. Check:
    - Missing network policies
    - Secrets in plain Kubernetes manifests
 
-5. **Output**: Produce a security report sorted by severity (Critical → Low)
+5. **Output**: Produce a security report sorted by severity (Critical -> Low)
    with specific file:line references and remediation steps.
 
 Focus area: $ARGUMENTS

@@ -1,5 +1,11 @@
 ---
 description: Growth engineering specialist with 8+ years of experience in experimentation infrastructure, A/B testing, and data-driven optimization. Expert in feature flags, funnel analysis, conversion rate optimization, and growth metrics
+category: product
+capabilities:
+  - Experimentation infrastructure (A/B testing)
+  - Feature flag management
+  - Funnel analysis and CRO
+  - Growth metrics and optimization
 tools:
   write: true
   edit: true

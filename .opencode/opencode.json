@@ -3,71 +3,54 @@
 
   "plugin": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "AVIDS2/memorix@git+https://github.com/AVIDS2/memorix.git",
-    "opencode-type-inject",
-    "opencode-shell-strategy",
     "opencode-dynamic-context-pruning",
-    "opencode-worktree",
+    "opencode-shell-strategy",
+    "opencode-devcontainers",
+    "opencode-type-inject",
+    "opencode-vibeguard",
     "opencode-notifier",
-    "opencode-websearch-cited",
-    "opencode-pty",
-    "opencode-vibeguard"
+    "opencode-skillful",
+    "opencode-worktree",
+    "oh-my-opencode",
+    "opencode-pty"
   ],
 
   "instructions": [
-    "docs/Constitution.md",
-    "./instructions/directives.md",
+    "./instructions/rag-context.md",
     "./instructions/team-comms.md",
-    "./instructions/rag-context.md"
+    "./instructions/directives.md",
+    "docs/Constitution.md"
   ],
 
   "mcp": {
     "context7": {
       "type": "local",
-      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@upstash/context7-mcp"],
-      "description": "Library documentation lookup — up-to-date docs for any npm package",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "timeout": 30000,
       "enabled": true
     },
-    "docfork": {
+    "memorix": {
       "type": "local",
-      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "docfork"],
-      "description": "Docs lookup via docfork",
+      "command": ["npx", "-y", "memorix", "serve"],
+      "timeout": 30000,
       "enabled": true
     },
     "sequential-thinking": {
       "type": "local",
-      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@modelcontextprotocol/server-sequential-thinking"],
-      "description": "Step-by-step reasoning for complex tasks",
-      "enabled": true
-    },
-    "fetch": {
-      "type": "local",
-      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@modelcontextprotocol/server-fetch"],
-      "description": "Web fetch — arbitrary HTTP GET/POST requests",
+      "command": ["npx", "-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "timeout": 30000,
       "enabled": true
     },
     "figma-bridge": {
       "type": "local",
-      "command": ["docker", "run", "--rm", "-i", "oven/bun", "bunx", "-y", "@gethopp/figma-mcp-bridge"],
-      "description": "Figma design inspection and asset export",
+      "command": ["npx", "-y", "@gethopp/figma-mcp-bridge"],
+      "timeout": 30000,
       "enabled": true
     },
     "playwright": {
       "type": "local",
       "command": ["docker", "run", "--rm", "-i", "--init", "--pull=always", "mcr.microsoft.com/playwright/mcp"],
-      "description": "Browser automation — E2E testing, scraping, screenshots via Playwright",
-      "enabled": true
-    },
-    "filesystem": {
-      "type": "local",
-      "command": ["docker", "run", "--rm", "-i", "-v", "{env:PWD}:/workspace", "oven/bun", "bunx", "-y", "@modelcontextprotocol/server-filesystem", "/workspace"],
-      "description": "Filesystem access — read/write/search files in project",
-      "enabled": true
-    },
-    "docker": {
-      "type": "local",
-      "command": ["docker", "run", "--rm", "-i", "-v", "/var/run/docker.sock:/var/run/docker.sock", "oven/bun", "bunx", "-y", "docker-mcp"],
-      "description": "Docker management — containers, images, volumes, networks",
+      "timeout": 30000,
       "enabled": true
     }
   },
@@ -78,6 +61,8 @@
     "spec-architect": {},
     "spec-planner": {},
     "agile-master": {},
+    "preflight-checker": {},
+    "release-manager": {},
     "spec-developer": {
       "tools": {
         "mcp_github*": true,
@@ -127,6 +112,17 @@
         "mcp_filesystem*": true
       }
     },
+    "monorepo-architect": {},
+    "front-lead": {},
+    "react-developer": {},
+    "vue-frontend-engineer": {},
+    "angular-frontend-engineer": {},
+    "svelte-developer": {},
+    "nodejs-developer": {},
+    "golang-developer": {},
+    "php-developer": {},
+    "dotnet-developer": {},
+    "mobile-developer": {},
     "open-pencil-designer": {
       "tools": {
         "mcp_figma*": true
@@ -138,6 +134,32 @@
         "mcp_playwright*": true
       }
     },
+    "database-architect": {},
+    "api-designer": {},
+    "api-documenter": {},
+    "deployment-engineer": {},
+    "devops-troubleshooter": {},
+    "compliance-officer": {},
+    "realtime-specialist": {},
+    "search-specialist": {},
+    "payments-specialist": {},
+    "data-engineer": {},
+    "data-analyst": {},
+    "ml-engineer": {},
+    "performance-engineer": {},
+    "refactor-agent": {},
+    "web-researcher": {},
+    "technical-writer": {},
+    "architecture-keeper": {},
+    "product-manager": {},
+    "growth-engineer": {},
+    "competitor-analyst": {},
+    "trend-watcher": {},
+    "docs-collector": {},
+    "migration-assistant": {},
+    "dependency-auditor": {},
+    "git-historian": {},
+    "sql-optimizer": {},
     "changelog-keeper": {
       "tools": {
         "mcp_github*": true,
@@ -146,7 +168,12 @@
     },
     "boilerplate-generator": {},
     "regex-helper": {},
-    "readme-generator": {}
+    "readme-generator": {},
+    "meeting-summarizer": {},
+    "email-composer": {},
+    "decision-helper": {},
+    "learning-planner": {},
+    "task-prioritizer": {}
   },
 
   "tools": {

@@ -1,5 +1,11 @@
 ---
 description: Payment systems specialist with 10+ years of experience integrating payment providers and building compliant payment infrastructure. Expert in Stripe, subscription billing, PCI compliance, and fraud prevention
+category: domain
+capabilities:
+  - Stripe and payment provider integration
+  - Subscription billing systems
+  - PCI compliance implementation
+  - Fraud prevention strategies
 tools:
   write: true
   edit: true

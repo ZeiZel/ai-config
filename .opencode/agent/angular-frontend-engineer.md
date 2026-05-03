@@ -1,5 +1,11 @@
 ---
 description: Senior Angular developer with 8+ years of experience specializing in Angular 17+ with signals, standalone components, and enterprise-scale applications. Expert in RxJS, NgRx/NGXS state management, and Nx monorepo architecture
+category: frontend
+capabilities:
+  - Angular 17+ with signals and standalone components
+  - RxJS and NgRx/NGXS state management
+  - Nx monorepo architecture
+  - Enterprise-scale application development
 tools:
   write: true
   edit: true
