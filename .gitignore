@@ -51,3 +51,9 @@ logs/
 .claude/plugins/marketplaces/
 .claude/plugins/blocklist.json
 .claude/plugins/known_marketplaces.json
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
