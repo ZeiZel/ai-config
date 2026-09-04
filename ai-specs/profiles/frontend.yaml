@@ -1,0 +1,5 @@
+schemaVersion: 1
+id: frontend
+description: Frontend profile with two reviewed Vercel release-asset skills only.
+extends: [base]
+external: [frontend-react-best-practices, frontend-composition-patterns]

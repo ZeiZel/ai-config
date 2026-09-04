@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: hashicorp-vault
+name: Guarded HashiCorp Vault access
+description: Safely inspect and update approved Vault KV values without exposing secrets to agents.
+license: MIT
+compatibility: Agent Skills compatible providers
+providers: [claude, codex, opencode, gemini]
+triggers: [Vault lookup, Vault update, credential reference]
+requires: [beads, security]
+capabilities:
+  filesystem: [approved-credential-path-only]
+  network: restricted-vault-endpoint
+  secrets: write-only-helper-sink
+provenance:
+  kind: authored
+  source: ai-config

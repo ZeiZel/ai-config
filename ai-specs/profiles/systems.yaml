@@ -1,0 +1,6 @@
+schemaVersion: 1
+id: systems
+description: Large-system architecture and multi-agent profile.
+extends: [base]
+external: [archify]
+mcp: [context7]

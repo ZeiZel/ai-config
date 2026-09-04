@@ -1,350 +1,142 @@
-# AI Config
+# ai-config v2
 
-Ansible-managed multi-agent AI development environment for Claude Code. One command installs 60+ specialized agents, 25+ skills, MCP servers, RAG infrastructure (Qdrant), design tools (OpenPencil), task management (Beads), and multi-agent orchestration (Gastown) -- globally available in any project.
+Reproducible, provider-neutral configuration for Claude Code, Codex, OpenCode, and Gemini. The
+project installs a small base of safe skills and lazily injects reviewed, pinned domain skills into
+projects. It requires Bun 1.4.0, which is also the runtime for the locked skills CLI. It is designed to work
+with `dotfiles`, but can also be cloned and run independently.
 
-## What This Does
-
-```
-~/.claude/ -> symlink to this repo's .claude/
-```
-
-After installation, every `claude` session on your machine has access to:
-
-- **60+ agents** -- from team-lead orchestrator to specialized frontend/backend/devops/security engineers
-- **25+ skills** -- `/teamlead`, `/implement`, `/debug`, `/test`, `/pr-review`, `/research`, and more
-- **MCP servers** -- Qdrant (RAG), code-index-mcp (semantic search), Context7 (live docs), Mem0 (agent memory), OpenPencil (design)
-- **Hooks** -- auto-lint on write, TTS on completion, OS notifications, safety guards
-- **Statusline** -- real-time usage tracking via ccusage
-
-## Quick Start
-
-### Fresh install (one command)
+## Quick start
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/ZeiZel/ai-config/master/install.sh)
+git clone https://github.com/ZeiZel/ai-config.git ~/.local/share/ai-config
+cd ~/.local/share/ai-config
+bun --version
+bun install --frozen-lockfile --ignore-scripts
+bun run check
+./install.sh --providers claude,codex,opencode,gemini --profiles base --dry-run
 ```
 
-### From cloned repo
+The `bun` executable resolved from `PATH` must be the trusted Bun 1.4.0 runtime before running
+package scripts or the installer; the bootstrap verifies this requirement before changing files.
+
+`--dry-run` never installs dependencies or changes `node_modules`; it requires an existing dependency
+tree whose metadata matches `package.json` and `bun.lock`. It trusts that existing local tree, while
+normal bootstrap installation creates a clean locked tree. Run the bootstrap without `--dry-run` once
+on a new checkout, then use dry-run for repeatable installation previews.
+
+Run `ai-config init --providers codex --profiles base --target /path/to/project` to initialize
+Spec Kit, local Beads, selected provider skills, managed instructions, and project-safe MCP config
+at the explicit target Git root. Use `--dry-run` first for non-empty repositories. Providers and profiles
+are comma-separated. `base`, `systems`, `frontend`, and `backend` are enabled; `unity` is an
+explicit high-risk profile and requires `--approve-external unity-curated`. The `systems` profile
+contains Archify and Context7; Docker is unavailable until its verified runtime prerequisites are
+provided. High-risk MCP servers require
+`--approve-mcp <ids>`, and `--no-mcp` suppresses MCP projection while reconciling only entries
+previously managed by ai-config.
+
+## Source model
+
+`ai-specs/` contains all authored specifications. Internal skills use `meta.yaml` and `body.md`.
+External dependencies are pinned in `ai-specs/external/catalog.yaml` and become installable only
+after `lock.yaml` has immutable commits, hashes, license metadata, and review metadata. Sources
+that require a published license artifact (currently Unity) additionally carry `licenseEvidence`.
+Profiles
+are lazy; domain packs are not cloned as Git submodules. The installer caches exact revisions and
+injects only selected skills.
+
+Host installation defaults to all four providers and the `base` profile. It uses
+`~/.local/state/ai-config/state.json` and installs a managed wrapper at `~/.local/bin/ai-config`;
+it never replaces provider homes. A legacy checkout at `~/.ai-config` is rejected so source and
+state cannot collide. The global state records the exact archive, selected skills, source-review
+and license-evidence references used for each installed external skill. Projects record selected
+external provenance in managed `.ai-config/external-lock.json`. Updates
+are made by reviewing and changing `ai-specs/external/lock.yaml`, regenerating if needed, and
+running project init again. The staging-only `skills-lock.json` is not the update authority and is
+not published into projects.
+
+The installer intentionally does not forward proxy values or other credential-bearing network
+settings into its isolated Bun process. Public network access must be provided by a trusted host
+wrapper. If an interrupted dependency swap leaves `.ai-config-node-modules.recovery`, rerun the
+installer: it restores the deterministic backup when the live tree is absent, and otherwise fails
+closed for manual review. A leftover `.ai-config-install.lock` is also fail-closed: after confirming
+no installer is running, remove that exact checkout-local lock directory and rerun; never remove a
+live lock.
+
+Only the SHA-verified archive's selected skill subtree is extracted. Traversal, duplicate entries,
+links inside that subtree, oversized archives, and symlinked CLI output roots are rejected. Links
+outside the selected subtree are validated as unselected and never materialized.
+
+The base includes Beads, project initialization, security, and guarded Vault guidance. Superpowers
+v6.3.0 is imported as its portable skill set; its native provider plugin is an optional separate
+integration. Archify v2.16.0 is available through the systems profile and must run with an
+output-path restriction. Frontend uses Vercel's locked React and composition skills; backend uses
+the locked `backend-engineering` skill. Unity skills are distributed under the Unity Companion
+License 1.4 and stay approval-gated.
+
+## Provider outputs
+
+The generator produces native skills for Claude (`.claude/skills`), Codex
+(`.agents/skills`), OpenCode (`.opencode/skills`), and Gemini (`.gemini/skills`). Outputs carry
+content manifests and are never hand-edited. Project initialization adds a bounded managed section
+to the provider instruction file while preserving surrounding user text. Run `bun run render` to
+regenerate and `bun run check` to detect drift.
+
+OpenCode project MCP output targets stable V1 (`opencode` 1.18.13), using the `opencode.json`
+schema published at
+<https://opencode.ai/config.json>: local servers use `type`, command arrays, and `environment`;
+remote servers use `type` and `url`. The generator validates this subset and does not mix it with
+Claude's MCP JSON format or beta V2's nested `mcp.servers` layout. Environment references use
+V1's `{env:NAME}` interpolation.
+
+## MCP and safety
+
+MCP is catalogued centrally and enabled by profile. The `default` profile provides minimal public
+Context7 access. Playwright, Chrome DevTools, CuaDriver, YouTrack writes, the read-only Obsidian
+wrapper, and Docker gateway require explicit opt-in and least-privilege configuration. CuaDriver
+and Docker remain unavailable until their verified runtime prerequisites are supplied. Obsidian
+requires the official CLI >=1.12.7, an exact selector, and `OBSIDIAN_VAULT_ROOT` equal to the
+canonical vault root. Raw Vault MCP is quarantined because a
+generic secret-read tool would return secret values to the agent; Vault operations use a trusted
+host helper with write-only results. Credentials are supplied by the host/helper, never committed
+or interpolated into config. Hooks redact sensitive payloads and reject unsafe targets.
+Project-specific internal-network wrappers must enforce their own no-proxy policy; the base
+distribution declares no internal commands.
+
+## Beads
+
+Every authored/base skill and every generated managed `AGENTS.md` knows the Beads protocol (unmodified
+upstream skills are not rewritten). Check the shared Dolt server with output suppressed using
+`BEADS_DOLT_SHARED_SERVER=1 bd dolt status`; start it only when status reports it unavailable,
+retry status with the same environment, then load global memory and run `bd prime`; run `bd init`
+for a project without local Beads. Beads is the task source of truth,
+while Spec Kit files are planning artifacts. PRIVATE memories and credential contents must never be
+copied into prompts, logs, files, or commits.
+
+## Development
 
 ```bash
-git clone https://github.com/ZeiZel/ai-config.git ~/.ai-config
-cd ~/.ai-config
-./install.sh
+bun run render
+bun run check
+./bin/ai-config doctor --target .
+./bin/ai-config init --providers claude --profiles base --target . --dry-run
+bun run test
 ```
 
-### RAG infrastructure only
+The local `install.sh` consumes the checked-out package and `bun.lock`. Global installation may fetch
+only catalog entries whose archive URL, commit, SHA-256, license metadata, and review metadata are
+locked (plus any required `licenseEvidence` artifact); it then runs the exact lock-installed skills
+CLI from isolated staging through Bun. It does not clone,
+pull, run Ansible, install a package manager, or replace a provider home. Dotfiles integration
+should use a pinned release or commit and execute that local installer; it must not execute a
+floating `curl | bash` pipeline.
 
-```bash
-./setup-ai.sh
-```
-
-## What Gets Installed
-
-### `install.sh` -- Full Setup
-
-Runs two Ansible roles sequentially:
-
-| Role | What it does |
-|------|-------------|
-| `roles/claude/` | Installs Claude Code binary, creates `~/.claude` symlink to this repo |
-| `roles/ai/` | Docker + Qdrant, MCP servers (qdrant-mcp, code-index-mcp, context7, mem0), OpenPencil, ccusage statusline |
-
-### `setup-ai.sh` -- RAG Only
-
-Runs `ansible-playbook all.yml --tags ai` -- skips Claude binary install, only sets up the AI infrastructure.
-
-## Architecture
-
-```
-ai-config/
-|
-+-- install.sh                  # Bootstrap: git + ansible + playbook
-+-- setup-ai.sh                 # RAG-only installer
-+-- all.yml                     # Main playbook (roles: claude, ai)
-+-- ansible.cfg                 # Ansible config
-+-- inventory/hosts.ini         # localhost
-+-- group_vars/all.yml          # Shared variables
-+-- requirements.yml            # Ansible Galaxy collections
-|
-+-- roles/
-|   +-- claude/                 # Role: Claude Code binary + config symlink
-|   |   +-- tasks/main.yml      # Install/update binary, symlink ~/.claude
-|   |   +-- defaults/main.yml
-|   |
-|   +-- ai/                     # Role: RAG + MCP infrastructure
-|       +-- tasks/
-|       |   +-- main.yml        # Orchestrates sub-tasks
-|       |   +-- prerequisites.yml   # Docker, uv, data dirs
-|       |   +-- qdrant.yml      # Qdrant container + collection
-|       |   +-- mcp-servers.yml # Pre-cache MCP packages
-|       |   +-- open-pencil.yml # OpenPencil CLI + MCP
-|       |   +-- configure.yml   # Register MCP servers via `claude mcp add`
-|       |   +-- ccusage.yml     # Statusline usage tracker
-|       |   +-- verify.yml      # Health check report
-|       +-- defaults/main.yml   # All configurable variables
-|       +-- templates/
-|           +-- qdrant-collection.json.j2   # Collection schema (384-dim, cosine, BM25)
-|           +-- statusline-usage.sh.j2      # ccusage wrapper
-|
-+-- .claude/                    # Claude Code configuration (symlinked to ~/.claude)
-|   +-- agents/                 # 60+ agent specifications
-|   |   +-- team-lead.md        # Main orchestrator
-|   |   +-- spec-agents/        # Spec-driven pipeline (8 agents)
-|   |   +-- frontend/           # React, Vue, Angular, architecture, standards
-|   |   +-- backend/            # Senior backend architect
-|   |   +-- devops/             # DevOps architect, troubleshooter, deployment
-|   |   +-- security/           # Security architect, compliance
-|   |   +-- data/               # Database architect, data engineer
-|   |   +-- documentation/      # Technical writer, API docs, changelog
-|   |   +-- research/           # Web researcher, trend watcher, competitor analyst
-|   |   +-- orchestration/      # Agile master, release manager, preflight
-|   |   +-- dev-tools/          # Regex, SQL, git, migrations, dependencies
-|   |   +-- everyday/           # Email, meetings, decisions, learning, priorities
-|   |   +-- domain/             # Payments, search, realtime
-|   |   +-- ui-ux/              # UI/UX master, OpenPencil designer
-|   |   +-- mobile/             # React Native
-|   |   +-- ai/                 # ML engineer
-|   |   +-- product/            # Product manager, growth engineer
-|   |   +-- quality/            # Performance engineer
-|   |   +-- architecture/       # API designer
-|   |   +-- analysis/           # Data analyst
-|   |   +-- utility/            # Code reviewer, refactorer
-|   |
-|   +-- skills/                 # 25+ reusable skill definitions
-|   |   +-- teamlead/           # Multi-agent orchestration
-|   |   +-- project-setup/      # Project onboarding wizard
-|   |   +-- agent-creator/      # Agent creation wizard
-|   |   +-- agent-workflow/     # Automated pipeline
-|   |   +-- beads-tasks/        # bd CLI integration
-|   |   +-- gastown-orchestrate/ # gt CLI integration
-|   |   +-- rag-context/        # Qdrant + code-index search
-|   |   +-- repomix-snapshot/   # Codebase snapshots
-|   |   +-- code-search/        # Multi-layer search
-|   |   +-- team-comms/         # Agent communication protocol
-|   |   +-- ...                 # research, docs, devops, etc.
-|   |
-|   +-- commands/               # Slash commands (/commit, /test, /debug, etc.)
-|   +-- hooks/                  # Event hooks (stop, post_tool_use, notification)
-|   +-- context/                # Environment context for agents
-|   +-- settings.json           # Permissions, hooks, statusline, env vars
-|   +-- templates/              # .mcp.json template for new projects
-|   +-- docs/                   # Internal documentation (agents catalog, skills catalog)
-|
-+-- docs/                       # Project documentation
-|   +-- Constitution.md         # Mandatory rules for ALL agents
-|   +-- project.yaml            # Project configuration
-|   +-- ai-optimization-plan.md # Improvement roadmap
-|   +-- architecture/           # Architecture specs
-|   +-- reports/                # Research reports
-|   +-- research/               # Research findings
-|
-+-- CLAUDE.md                   # Project instructions for Claude Code
-```
-
-## Agent System
-
-### Hierarchy
-
-```
-User
-  |
-  +-- team-lead (opus) -- pure orchestrator, never writes code
-      |
-      +-- Planning (opus -- deep reasoning for specs/architecture)
-      |   +-- spec-analyst (opus) -- requirements, user stories, creates tasks
-      |   +-- spec-architect (opus) -- system design, tech decisions
-      |   +-- agile-master (opus) -- phases, priorities, workflow selection
-      |   +-- spec-planner (opus) -- task breakdown, implementation plan
-      |
-      +-- Sub-Orchestrators (sonnet -- code-level execution)
-      |   +-- senior-frontend-architect (sonnet) -- manages React/Vue/Angular devs
-      |   +-- senior-backend-architect (sonnet) -- manages DB/API/realtime specialists
-      |   +-- senior-devops-architect (sonnet) -- manages deployment/troubleshooting
-      |   +-- security-architect (sonnet) -- manages compliance
-      |
-      +-- Execution (parallel, via sub-orchestrators)
-      |   +-- spec-developer (sonnet) -- implementation
-      |   +-- [domain agents] (sonnet) -- specialized work
-      |
-      +-- Quality (parallel)
-      |   +-- spec-reviewer (opus) -- code review
-      |   +-- spec-tester (sonnet) -- tests
-      |   +-- spec-validator (sonnet) -- final check
-      |
-      +-- Documentation
-          +-- architecture-keeper (sonnet) -- living docs
-```
-
-### Model Routing
-
-| Model | Agents | Use case |
-|-------|--------|----------|
-| **opus** | team-lead, spec-analyst, spec-architect, spec-planner, agile-master | Planning, specs, architecture |
-| **sonnet** | developers, testers, reviewers, senior-*-architects, security | Code writing, execution, reviews |
-| **haiku** | changelog, boilerplate, regex, readme | Mechanical, template-based |
-
-### Communication Protocol
-
-All agents use `SendMessage` with structured message types:
-
-| Type | When | Format |
-|------|------|--------|
-| PROGRESS | Long tasks | `PROGRESS: {%} on {task}. Done: {list}` |
-| QUESTION | Ambiguity | `QUESTION: {q}. Affects: {impact}` |
-| BLOCKER | Cannot proceed | `BLOCKER: {reason}. Tried: {list}. Need: {ask}` |
-| DONE | Complete | `DONE: {summary}. Files: {list}. Confidence: {0-1}` |
-| SUGGESTION | Insight | `SUGGESTION: {observation}. Recommendation: {action}` |
-
-### Workflow Templates
-
-| Template | Phases | Quality Gate |
-|----------|--------|-------------|
-| **feature** | analyst -> architect -> agile-master -> dev -> review -> test -> validate | 95% |
-| **bugfix** | dev -> review -> test | 90% |
-| **hotfix** | dev -> test | 85% |
-| **refactor** | architect -> dev -> review -> test | 95% |
-| **docs** | writer -> architecture-keeper | review |
-| **prototype** | architect -> dev | 75% |
-
-## MCP Servers
-
-Installed at **user scope** (available in all projects):
-
-| Server | Purpose | Backend |
-|--------|---------|---------|
-| **qdrant-mcp** | Vector search, knowledge storage | Qdrant (Docker) |
-| **code-index-mcp** | Deep code indexing, semantic search | Local index |
-| **context7** | Live library documentation | HTTP API |
-| **mem0** | Structured agent memory | Local SQLite |
-| **open-pencil** | AI-driven design tool | npx |
-
-### Per-Project MCP
-
-Copy `.claude/templates/.mcp.json.template` to your project as `.mcp.json` for project-specific servers (GitHub, Playwright, etc.).
-
-## Integrated Tools
-
-| Tool | Command | Purpose |
-|------|---------|---------|
-| **Beads** | `bd` | Task management with DAG dependencies |
-| **Gastown** | `gt` | Multi-agent orchestration for large projects |
-| **Repomix** | `repomix` | Codebase context snapshots |
-| **Aider** | `aider` | AI pair programming |
-| **ccusage** | statusline | Real-time Claude Code usage tracking |
-
-## Context Strategy
-
-| Strategy | When | How |
-|----------|------|-----|
-| **auto** | Default | Check snapshot size, auto-select |
-| **repomix** | <=700k tokens | Read snapshot, extract relevant sections |
-| **rag** | >700k tokens | Query Qdrant + code-index-mcp |
-
-Configured per-project in `docs/project.yaml` -> `context.strategy`.
-
-## Hooks
-
-| Hook | Trigger | Action |
-|------|---------|--------|
-| **PostToolUse (Write)** | After file write | Auto-lint (eslint/ruff) |
-| **PreToolUse (Bash)** | Before shell commands | Block `rm -rf`, force-push to main |
-| **Notification** | Agent completion | OS notification (macOS/Linux) |
-| **Stop** | Session end | TTS announcement, log session |
-| **SessionStart** | Session begins | Load Beads context (`bd prime`) |
-| **PreCompact** | Before context compaction | Preserve task state (`bd prime`) |
-
-## Settings
-
-Key settings in `.claude/settings.json`:
-
-- **Permissions**: Pre-approved tools (git, docker, npm, language runtimes, etc.)
-- **Safety guards**: Blocks `rm -rf`, force-push to main/master
-- **Environment**: Agent teams enabled, 30-turn agent limit, MCP 30s timeout
-- **Default mode**: `acceptEdits` -- auto-approve file edits
-
-## Skills Reference
-
-### Development
-`/teamlead` `/implement` `/debug` `/refactor` `/test` `/commit`
-
-### Quality
-`/pr-review` `/security-audit` `/audit` `/simplify`
-
-### Research & Planning
-`/research` `/design` `/decide` `/docs` `/learn`
-
-### Project Management
-`/project-setup` `/onboard` `/changelog` `/readme` `/migrate`
-
-### Domain
-`/backend-dev` `/devops` `/ai-product-dev` `/analytics` `/system-design`
-
-### Agent System
-`/agent-creator` `/agent-workflow` `/directives` `/update-ai` `/find-skills`
-
-## Configuration
-
-### Ansible Variables (`roles/ai/defaults/main.yml`)
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `qdrant_enabled` | `true` | Deploy Qdrant container |
-| `qdrant_tag` | `v1.13.2` | Qdrant image version |
-| `qdrant_memory_limit` | `1g` | Container memory limit |
-| `qdrant_mcp_embedding_model` | `paraphrase-multilingual-MiniLM-L12-v2` | Embedding model (RU/EN) |
-| `qdrant_hybrid_search_enabled` | `true` | BM25 sparse vectors |
-| `code_index_mcp_enabled` | `true` | Code indexing MCP |
-| `context7_mcp_enabled` | `true` | Library docs MCP |
-| `mem0_enabled` | `true` | Agent memory MCP |
-| `open_pencil_enabled` | `true` | Design tool |
-| `ccusage_enabled` | `true` | Usage statusline |
-
-### Qdrant Collection Schema
-
-- **Dense vectors**: 384-dim, cosine distance, int8 quantization
-- **Sparse vectors**: BM25 with IDF modifier (hybrid search)
-- **Storage**: mmap on disk, quantized vectors in RAM
-- **HNSW**: m=16, ef_construct=100
-
-## Health Checks
-
-```bash
-# Qdrant
-curl -s http://localhost:6333/healthz
-docker start qdrant  # if stopped
-
-# MCP servers
-claude mcp list
-
-# Beads
-bd list
-
-# Repomix
-repomix --version
-```
-
-## Supported Platforms
-
-| Platform | Package Manager | Status |
-|----------|----------------|--------|
-| macOS | Homebrew | Primary |
-| Ubuntu/Debian | apt | Supported |
-| Fedora/RHEL | dnf | Supported |
-| Arch Linux | pacman | Supported |
-
-## Key Documents
-
-| Document | Path | Purpose |
-|----------|------|---------|
-| Constitution | `docs/Constitution.md` | Mandatory rules for ALL agents |
-| Optimization Plan | `docs/ai-optimization-plan.md` | Improvement roadmap |
-| Architecture | `docs/architecture/overview.md` | System architecture spec |
-| Tech Stack | `docs/tech-stack.md` | Technology documentation |
-| Requirements | `docs/requirements.md` | System requirements |
-| Project Config | `docs/project.yaml` | Project-level configuration |
-| Agent Catalog | `.claude/docs/agents/README.md` | All agents with descriptions |
-| Skills Catalog | `.claude/docs/skills/README.md` | All skills with usage |
-
-## License
-
-Private repository.
+`install` is deliberately the global operation and requires `--target <HOME>` (or an explicit
+`HOME`). `init`, `repair`, and non-global `uninstall-managed` require `--target <project>` and
+operate on that project's `.ai-config/state.json`; read-only `doctor` may inspect the current
+working directory by default, with `--target <project>` available for clarity. Use
+`--global --target <HOME>` to inspect or remove the host installation and its separate
+`.local/state/ai-config/state.json` manifest.
+Mutating lifecycle commands refuse uid 0. `--mcp-profiles`, `--approve-mcp`, and `--approve-external` accept comma-separated IDs;
+`--dry-run` performs validation and planning but does not invoke Spec Kit, Beads, the skills CLI, or network
+fetches. Provider/profile selection is reconciled exactly on a subsequent run, and `--no-mcp`
+removes only ai-config-owned MCP entries.

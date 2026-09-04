@@ -1,0 +1,21 @@
+schemaVersion: 1
+specKit:
+  repository: https://github.com/github/spec-kit.git
+  version: v1.0.4
+  resolvedCommit: cb610277fdea781fcfa83d20522c2db37c94068d
+  command: uvx
+  installSource: git+https://github.com/github/spec-kit.git@cb610277fdea781fcfa83d20522c2db37c94068d
+  nonInteractive: true
+  directProjectWrites: false
+beads:
+  detectExistingFirst: true
+  initializeByDefault: true
+  allowExplicitOptOut: true
+  neverReconfigureExisting: true
+managedFiles:
+  statePath: .ai-config/state.json
+  staging: true
+  atomicPublish: true
+  preserveDirty: true
+  preserveUnknown: true
+  removeOnlyHashMatched: true

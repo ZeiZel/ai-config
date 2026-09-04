@@ -1,0 +1,6 @@
+schemaVersion: 1
+id: base
+description: Minimal safe workflow installed for every project.
+skills: [beads, project-init, security, hashicorp-vault]
+external: [superpowers-core]
+mcp: [context7]

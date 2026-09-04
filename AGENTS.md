@@ -1,226 +1,108 @@
-# AI Config
+# ai-config v2
 
-Multi-platform AI development environment: OpenCode agents, MCP servers, RAG infrastructure.
-Compatible with: **OpenCode** (primary), **Claude Code**, **Gemini CLI**, **Codex**.
+This repository is the source of truth for a small, reproducible AI-agent bootstrap. It does not
+contain a zoo of personas. Author provider-neutral instructions, skills, security policies, MCP
+profiles, and external pins only under `ai-specs/`; generated provider files are build artefacts.
 
-## Quick Reference
+## How it works
 
-- **Constitution**: `docs/Constitution.md` — mandatory rules for ALL agents
-- **Architecture**: `docs/architecture/overview.md` — system architecture spec
-- **Requirements**: `docs/requirements.md` — functional & non-functional requirements
-- **Tech Stack**: `docs/tech-stack.md` — technology documentation
-- **Quality Gates**: `docs/quality-gates.yaml` — workflow quality thresholds
-- **Optimization Plan**: `docs/ai-optimization-plan.md` — current improvement roadmap
-- **Project Config**: `docs/project.yaml` — full project configuration
-- **Agents (OpenCode)**: `.opencode/agent/` — 65 agent specifications
-- **Skills (OpenCode)**: `.opencode/skills/` — Superpowers skills (TDD, subagent-driven dev, etc.)
-- **Commands**: `.opencode/commands/` — slash-commands
-- **Instructions**: `.opencode/instructions/` — global context loaded per session
-- **Agents (Claude Code)**: `.claude/agents/` — backward-compatible copies
-- **AI Infrastructure**: `roles/ai/` — Ansible role for Qdrant, MCP servers
+`ai-specs/skills/<id>/{meta.yaml,body.md}` describes internal skills. `ai-specs/external/catalog.yaml`
+and `lock.yaml` describe immutable upstream skills. Profiles select the base, frontend, backend,
+systems, or Unity set. The generator validates the normalized model, renders Claude, Codex,
+OpenCode, and Gemini outputs, and fails on unsupported fields, collisions, stale files, or unlocked
+dependencies. Never edit `generated/` or provider output by hand.
 
-## Platform Tool Mapping
+The installer stages files, verifies hashes, and atomically publishes only paths listed in its
+managed manifest. It must never replace a provider's entire home directory or touch auth,
+history, sessions, OAuth stores, credentials, or unknown user files. Host application happens only
+when explicitly requested; editing this repository is not host application.
 
-| Claude Code tool | OpenCode equivalent |
-|------------------|---------------------|
-| `Skill` tool | `skill` tool (native) |
-| `Agent(subagent_type: "x")` | `@x task description` (@mention syntax) |
-| `Task` tool | `@mention` subagent dispatch |
-| `TodoWrite` | `todowrite` tool |
-| `Read`, `Write`, `Edit`, `Bash` | native tools |
-| `SendMessage` | `sendmessage` tool |
-
-## Subagent Dispatch (OpenCode)
-
-Spawn subagents using `@mention` syntax. Always provide self-contained context:
-
-```
-@spec-developer Implement the auth middleware in src/middleware/auth.ts.
-Requirements: JWT validation, role-based access, refresh token rotation.
-Files to create: src/middleware/auth.ts, src/middleware/auth.test.ts
-Architecture: see docs/artifacts/auth/01-architecture.md
-```
-
-For parallel tasks — use `superpowers:dispatching-parallel-agents` skill.
-For plan execution — use `superpowers:subagent-driven-development` skill.
-
-## Installation
+## Start and commands
 
 ```bash
-# Fresh install (clones repo + runs Ansible)
-bash <(curl -fsSL https://raw.githubusercontent.com/ZeiZel/ai-config/master/install.sh)
-
-# From cloned repo
-./install.sh
-
-# RAG infrastructure only (Qdrant + MCP)
-./setup-ai.sh
+bun --version                 # exactly 1.4.0
+bun install --frozen-lockfile --ignore-scripts
+bun run render
+bun run check
+./bin/ai-config doctor
+./bin/ai-config init --providers claude,codex,opencode,gemini --profiles base --target . --dry-run
 ```
 
-## Key Commands
+`bun.lock` is the dependency authority. `bunfig.toml` disables implicit environment-file loading,
+lifecycle scripts, telemetry, and automatic dependency installation. Use the repository's explicit
+Bun flags/config for every command; do not substitute another runtime/package manager, an implicit
+package runner, or an ambient global `skills` executable. The version-pinned skills CLI is installed and invoked from the isolated
+checkout through Bun by the lifecycle code.
+
+Use `ai-config init` (or the generated `project-init` skill) to prepare another repository with
+explicit Spec Kit integrations, local Beads, selected profiles, and project-safe MCP. Claude,
+OpenCode, and Gemini can expose `/project-init`; Codex invokes `$project-init`. Do not shadow a
+provider's native `/init` command.
+
+The normal project command is the safe launcher; `bin/ai-config-lifecycle.mjs` is internal-only:
 
 ```bash
-# Task management
-bd ready          # Available tasks
-bd list           # All tasks
-bd create         # New task
-bd update --claim # Claim task
-
-# Context
-repomix --output docs/context/codebase-snapshot.txt  # Refresh snapshot
-
-# RAG health
-curl -s http://localhost:6333/healthz               # Qdrant status
-docker start qdrant                                  # Start if stopped
+./bin/ai-config init \
+  --providers claude,codex,opencode,gemini \
+  --profiles base --mcp-profiles default --target <project>
 ```
 
-## Context Strategy
+Add `--approve-mcp <ids>` for write-capable or high-risk MCP profiles and
+`--approve-external unity-curated` for the Unity Companion License source. `--no-mcp` reconciles
+only ai-config-owned MCP entries. `--dry-run` plans the operation without invoking network tools,
+Spec Kit, Beads, or the skills CLI. Pass an explicit `--target <project>` to `init`, `repair`, and non-global
+`uninstall-managed`; use `--global --target <HOME>` with `doctor` or `uninstall-managed` for the
+host manifest. Mutating lifecycle commands refuse uid 0.
 
-- **auto** (default): Check snapshot size, use repomix if <=700k tokens, RAG if larger
-- **repomix**: Read snapshot, extract relevant sections per agent
-- **rag**: Query Qdrant + code-index-mcp for targeted context
+## Beads and memory
 
-## Workflow Templates
+At the start of work run output-free `BEADS_DOLT_SHARED_SERVER=1 bd dolt status`; if it reports
+the shared server unavailable, run `BEADS_DOLT_SHARED_SERVER=1 bd dolt start` and retry status.
+Then run `BEADS_DOLT_SHARED_SERVER=1 bd --global prime --memories-only`, followed by `bd prime`. Arbitrary prime failures
+propagate and must not trigger an unsolicited restart. Initialize local Beads with `bd init` when
+absent. Beads is the only task tracker. Never expose PRIVATE global memory or read
+credential-file contents; pass approved credential paths only to trusted helpers. Record verified
+repository facts with stable `bd remember --key` keys, never task status.
 
-| Template | Phases | Quality | Use When |
-|----------|--------|---------|----------|
-| feature | full pipeline | 95% | New features |
-| bugfix | dev -> review -> test | 90% | Bug fixes |
-| hotfix | dev -> test | 85% | Critical fixes |
-| refactor | arch -> dev -> review -> test | 95% | Refactoring |
-| docs | writer -> arch-keeper | review | Documentation |
-| prototype | arch -> dev | 75% | Exploration |
+## Security and MCP
 
-## Agent Model Routing
+Security hooks are heuristic defense in depth, not an OS sandbox. Secrets, `.env*`, private keys, complete environments, raw
+Vault output, and full MCP payloads must not enter model context or logs. MCP profiles are least
+privilege and read-only by default. Chrome uses an isolated profile; Obsidian, YouTrack writes,
+Docker, CuaDriver, and destructive tools require explicit profiles and approval. CuaDriver
+and Docker are unavailable until their verified runtime prerequisites are provided. Obsidian requires
+the official CLI >=1.12.7, an exact selector, and an exact canonical `OBSIDIAN_VAULT_ROOT`.
+Corporate/internal CLI targets must use `x5-no-proxy`. A managed-file process-death or rollback
+failure leaves `.ai-config-lifecycle-recovery.json`; inspect it and remove it manually after review.
+The dependency installer uses the separate `.ai-config-node-modules.recovery` marker and restores
+its deterministic backup on the next run only when the live tree is absent; otherwise it fails closed.
 
-- **anthropic/claude-opus-4-5**: spec-analyst, spec-architect, spec-planner, spec-reviewer, agile-master, senior-frontend/backend/devops-architect, security-architect
-- **anthropic/claude-sonnet-4-5**: team-lead, spec-developer, spec-tester, spec-validator + all other implementation agents
-- **anthropic/claude-haiku-4-5**: changelog-keeper, boilerplate-generator, regex-helper, readme-generator (mechanical tasks)
+The project initializer projects native hook files for Claude, Codex, Gemini, and stable OpenCode
+V1. Codex project hooks require the project to be trusted before `/hooks` can enable them. Raw Vault
+MCP is not installed; use the trusted host helper. MCP server commands and dynamic URLs are
+provider-specific, so `doctor` must be run after selecting a profile and credentials are always
+provided by the host environment.
 
-## MCP Servers
+External domain packs are lazy and are not Git submodules. The locked registry currently provides
+Superpowers v6.3.0, Archify v2.16.0, Vercel React/composition skills, a pinned backend skill, and
+Unity's pinned skills. Each source has an immutable commit, archive SHA-256, license metadata,
+review record, and selected skill paths; only sources needing a published artifact (currently Unity)
+carry `licenseEvidence`. Update by reviewing `ai-specs/external/lock.yaml`, updating
+the matching catalog entry and generated provenance, then rerunning init; never install an entire
+upstream repository by default.
 
-| Server | Purpose | Enabled |
-|--------|---------|---------|
-| `context7` | Library documentation lookup | global |
-| `docfork` | MIT library docs, no rate limits | global |
-| `sequential-thinking` | Complex multi-step reasoning | global |
-| `github` | PRs, issues, repos | spec-developer only |
-| `figma` | Design files, components, tokens | design agents only |
+## Change discipline
 
-**Figma setup**: set `FIGMA_ACCESS_TOKEN` env var and set `"enabled": true` for the figma MCP in `opencode.json`.
+Preserve dirty files. Do not commit, push, rewrite history, or apply host changes without explicit
+authority. Run `bun run check`, relevant provider smoke tests, and `git diff --check` before handoff.
+Operational install/init/doctor actions should use `./bin/ai-config` or installed `ai-config`; `bun run`
+is for trusted development tasks.
 
-## Superpowers Skills
+## Dotfiles integration
 
-Skills from [obra/superpowers](https://github.com/obra/superpowers) are installed in `.opencode/skills/`.
-Plugin is auto-loaded via `opencode.json`:
-
-```json
-{ "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"] }
-```
-
-Key skills and their triggers:
-- `superpowers:brainstorming` — before any feature design or creative work
-- `superpowers:writing-plans` — when you have a spec and need an implementation plan
-- `superpowers:subagent-driven-development` — executing plans with independent tasks
-- `superpowers:dispatching-parallel-agents` — 2+ independent tasks in parallel
-- `superpowers:test-driven-development` — implementing any feature or fix
-- `superpowers:systematic-debugging` — any bug or unexpected behavior
-- `superpowers:verification-before-completion` — before claiming work is done
-- `superpowers:requesting-code-review` — after completing major feature
-- `superpowers:finishing-a-development-branch` — when implementation is complete
-
-## Compaction Rules
-
-When context is compacted, ALWAYS preserve:
-- List of modified files and their purpose
-- Architectural decisions made during the session
-- Test commands and their results
-- Open blockers and unresolved questions
-- Current task IDs (bd-XXX) and their status
-- Workflow template being used (feature/bugfix/hotfix/etc)
-
-## User Preferences
-
-- Language: Russian for communication
-- Approach: thorough analysis before implementation
-- Shell: zsh with eza, bat, fd, rg, lazygit
-
-<!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:970c3bf2 -->
-## Beads Issue Tracker
-
-This project uses **bd (beads)** for issue tracking. Run `bd prime` to see full workflow context and commands.
-
-### Quick Reference
-
-```bash
-bd ready              # Find available work
-bd show <id>          # View issue details
-bd update <id> --claim  # Claim work
-bd close <id>         # Complete work
-```
-
-### Rules
-
-- Use `bd` for ALL task tracking — do NOT use TodoWrite, TaskCreate, or markdown TODO lists
-- Run `bd prime` for detailed command reference and session close protocol
-- Use `bd remember` for persistent knowledge — do NOT use MEMORY.md files
-
-**Architecture in one line:** issues live in a local Dolt DB; sync uses `refs/dolt/data` on your git remote; `.beads/issues.jsonl` is a passive export. See https://github.com/gastownhall/beads/blob/main/docs/SYNC_CONCEPTS.md for details and anti-patterns.
-
-## Agent Context Profiles
-
-The managed Beads block is task-tracking guidance, not permission to override repository, user, or orchestrator instructions.
-
-- **Conservative (default)**: Use `bd` for task tracking. Do not run git commits, git pushes, or Dolt remote sync unless explicitly asked. At handoff, report changed files, validation, and suggested next commands.
-- **Minimal**: Keep tool instruction files as pointers to `bd prime`; use the same conservative git policy unless active instructions say otherwise.
-- **Team-maintainer**: Only when the repository explicitly opts in, agents may close beads, run quality gates, commit, and push as part of session close. A current "do not commit" or "do not push" instruction still wins.
-
-## Session Completion
-
-This protocol applies when ending a Beads implementation workflow. It is subordinate to explicit user, repository, and orchestrator instructions.
-
-1. **File issues for remaining work** - Create beads for anything that needs follow-up
-2. **Run quality gates** (if code changed) - Tests, linters, builds
-3. **Update issue status** - Close finished work, update in-progress items
-4. **Handle git/sync by active profile**:
-   ```bash
-   # Conservative/minimal/default: report status and proposed commands; wait for approval.
-   git status
-
-   # Team-maintainer opt-in only, unless current instructions forbid it:
-   git pull --rebase
-   bd dolt push
-   git push
-   git status
-   ```
-5. **Hand off** - Summarize changes, validation, issue status, and any blocked sync/commit/push step
-
-**Critical rules:**
-- Explicit user or orchestrator instructions override this Beads block.
-- Do not commit or push without clear authority from the active profile or the current user request.
-- If a required sync or push is blocked, stop and report the exact command and error.
-<!-- END BEADS INTEGRATION -->
-
-<!-- BEGIN BEADS CODEX SETUP: generated by bd setup codex -->
-## Beads Issue Tracker
-
-Use Beads (`bd`) for durable task tracking in repositories that include it. Use the `beads` skill at `.agents/skills/beads/SKILL.md` (project install) or `~/.agents/skills/beads/SKILL.md` (global install) for Beads workflow guidance, then use the `bd` CLI for issue operations.
-
-### Quick Reference
-
-```bash
-bd ready                # Find available work
-bd show <id>            # View issue details
-bd update <id> --claim  # Claim work
-bd close <id>           # Complete work
-bd prime                # Refresh Beads context
-```
-
-### Rules
-
-- Use `bd` for all task tracking; do not create markdown TODO lists.
-- Run `bd prime` when Beads context is missing or stale. Codex 0.129.0+ can load Beads context automatically through native hooks; use `/hooks` to inspect or toggle them.
-- Keep persistent project memory in Beads via `bd remember`; do not create ad hoc memory files.
-
-**Architecture in one line:** issues live in a local Dolt DB; sync uses `refs/dolt/data` on your git remote; `.beads/issues.jsonl` is a passive export. See https://github.com/gastownhall/beads/blob/main/docs/SYNC_CONCEPTS.md for details and anti-patterns.
-<!-- END BEADS CODEX SETUP -->
+The `dotfiles` repository owns host provisioning and should install this repository from a pinned
+release or commit under `~/.local/share/ai-config`, require Bun 1.4.0, run
+`bun install --frozen-lockfile --ignore-scripts`, and invoke its local `install.sh`. It must not use
+a floating `curl | bash` pipeline or an unpinned runtime bootstrap. This
+repository owns provider skill/config paths and its state manifest; dotfiles owns surrounding host
+packages and symlink policy.

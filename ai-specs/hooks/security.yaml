@@ -1,0 +1,30 @@
+schemaVersion: 1
+command: ai-config guard
+maxInputBytes: 65536
+policy:
+  decision: default-allow
+  malformedInput: deny
+  secretOrCredentialRead: deny
+  rawEnvironmentDump: deny
+  broadDestructiveCommand: deny
+audit:
+  metadataOnly: true
+  includePayload: false
+providers:
+  claude:
+    format: settings-json
+    event: PreToolUse
+    command: ai-config guard --provider claude --event pre-tool-use
+  codex:
+    format: hooks-json
+    nativeHook: true
+    events: [PreToolUse, PermissionRequest]
+    command: ai-config guard --provider codex --event PreToolUse
+  gemini:
+    format: settings-json
+    event: BeforeTool
+    command: ai-config guard --provider gemini --event before-tool
+  opencode:
+    format: plugin-v1-plus-permission
+    command: ai-config guard --provider opencode --event permission
+    note: Uses OpenCode 1 plugin event and permission layer; no V2 mcp.servers claims. The generated plugin is self-contained.

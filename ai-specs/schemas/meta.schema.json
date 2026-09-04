@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "name", "description", "providers"],
+  "properties": {
+    "schemaVersion": {"type": "integer", "const": 1},
+    "id": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "minLength": 1, "maxLength": 64},
+    "name": {"type": "string", "minLength": 1, "maxLength": 128},
+    "description": {"type": "string", "minLength": 1, "maxLength": 1024, "pattern": "^[^\\r\\n]+$"},
+    "license": {"type": "string"},
+    "compatibility": {"type": "string"},
+    "providers": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["claude", "codex", "opencode", "gemini"]}},
+    "triggers": {"type": "array", "items": {"type": "string"}},
+    "requires": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "maxLength": 64}},
+    "capabilities": {"type": "object", "additionalProperties": {"anyOf": [{"type": "array", "items": {"type": "string"}}, {"type": "string"}, {"type": "object"}]}},
+    "permissions": {"type": "object", "additionalProperties": {"type": "string"}},
+    "provenance": {"type": "object", "additionalProperties": {"type": "string"}}
+  }
+}

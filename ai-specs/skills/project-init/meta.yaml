@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: project-init
+name: Initialize a project with AI configuration
+description: Prepare a repository with spec-kit, Beads, selected skills, MCP profiles, and managed instructions.
+license: MIT
+compatibility: Agent Skills compatible providers
+providers: [claude, codex, opencode, gemini]
+triggers: [/init, project initialization, onboarding]
+requires: [beads]
+capabilities:
+  filesystem: [read-project, write-managed-config]
+  network: package-and-repository-install
+  secrets: none
+provenance:
+  kind: authored
+  source: ai-config

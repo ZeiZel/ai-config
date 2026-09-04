@@ -1,0 +1,14 @@
+schemaVersion: 1
+providers:
+  claude:
+    skillDir: .claude/skills
+    instructionFile: CLAUDE.md
+  codex:
+    skillDir: .agents/skills
+    instructionFile: AGENTS.md
+  opencode:
+    skillDir: .opencode/skills
+    instructionFile: AGENTS.md
+  gemini:
+    skillDir: .gemini/skills
+    instructionFile: GEMINI.md

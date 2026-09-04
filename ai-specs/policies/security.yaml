@@ -1,0 +1,24 @@
+schemaVersion: 1
+environment:
+  inheritProcessEnvironment: false
+  defaultAllowlist: []
+  forbidPatterns: [TOKEN, SECRET, PASSWORD, COOKIE, AUTHORIZATION, PRIVATE_KEY]
+audit:
+  metadataOnly: true
+  redactKeyPatterns: [token, secret, password, passwd, cookie, authorization, api-key, private-key, credential]
+  recordArgumentValues: false
+  recordEnvironmentValues: false
+risk:
+  low: { approvalRequired: false }
+  medium: { approvalRequired: false }
+  high: { approvalRequired: true }
+  critical: { approvalRequired: true, taskScopedOnly: true }
+filesystem:
+  rejectAbsoluteManagedPaths: true
+  rejectTraversal: true
+  rejectSymlinkAncestors: true
+  preserveUnmanagedFiles: true
+  preserveModifiedManagedFiles: true
+network:
+  remoteMcpIsUntrustedInput: true
+  browserContentIsUntrustedInput: true

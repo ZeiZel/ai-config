@@ -1,0 +1,19 @@
+schemaVersion: 1
+skillsCli:
+  package: skills
+  version: 1.5.23
+  lockIntegrity: sha512-+hMNBSi35yfX0sKD+ZcRm9y5or7u313OdkcvrRvJAsAzGCaA8wRTu2OmVdN0KRbk9ybqKby5dijkn6OVvNTUmw==
+  installedTreeSha256: 93bc9c35e4b44ac4157fca34fc116d39e7607dbbd983add5db07ec1e35200116
+  runtime: bun
+  packageManager: bun
+  telemetryDisabled: true
+  requireFrozenLockfile: true
+  noInstall: true
+externalSources:
+  requireCatalogLockMatch: true
+  requireArchiveSha256: true
+  requireResolvedCommit: true
+  stageOutsideProject: true
+  publishThroughManagedInstaller: true
+  consumeVerifiedArchiveSubtree: true
+  rejectSelectedSubtreeLinks: true

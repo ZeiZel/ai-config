@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: security
+name: Secure agent operations
+description: Apply least privilege, secret handling, and destructive-operation safeguards.
+license: MIT
+compatibility: Agent Skills compatible providers
+providers: [claude, codex, opencode, gemini]
+triggers: [every tool call, shell command, MCP operation, security review]
+requires: [beads]
+capabilities:
+  filesystem: [read-policy]
+  network: restricted
+  secrets: deny-direct-read
+provenance:
+  kind: authored
+  source: ai-config

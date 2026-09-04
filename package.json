@@ -1,0 +1,54 @@
+{
+  "name": "ai-config-v2",
+  "version": "2.0.0",
+  "description": "Reproducible provider-neutral AI skills, MCP profiles, and project initialization for Claude Code, Codex, OpenCode, and Gemini.",
+  "type": "module",
+  "bin": {
+    "ai-config": "bin/ai-config"
+  },
+  "scripts": {
+    "render": "bun --no-env-file --no-install --config=./bunfig.toml src/commands/render.js",
+    "check": "bun --no-env-file --no-install --config=./bunfig.toml src/commands/render.js --check",
+    "clean": "bun --no-env-file --no-install --config=./bunfig.toml src/commands/render.js --clean",
+    "test": "bun --no-env-file --no-install --config=./bunfig.toml test --timeout 30000 tests",
+    "bootstrap": "./install.sh",
+    "ai-config": "./bin/ai-config",
+    "install-managed": "./bin/ai-config install",
+    "repair-managed": "./bin/ai-config repair",
+    "uninstall-managed": "./bin/ai-config uninstall-managed",
+    "doctor": "./bin/ai-config doctor",
+    "init": "./bin/ai-config init"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZeiZel/ai-config.git"
+  },
+  "keywords": [
+    "ai-agents",
+    "agent-skills",
+    "mcp"
+  ],
+  "author": "ZeiZel",
+  "license": "MIT",
+  "engines": {
+    "bun": "1.4.0"
+  },
+  "packageManager": "bun@1.4.0",
+  "trustedDependencies": [],
+  "bugs": {
+    "url": "https://github.com/ZeiZel/ai-config/issues"
+  },
+  "homepage": "https://github.com/ZeiZel/ai-config#readme",
+  "dependencies": {
+    "@playwright/mcp": "0.0.80",
+    "ajv": "8.20.0",
+    "chrome-devtools-mcp": "1.7.0",
+    "mcp-remote": "0.8.3",
+    "skills": "1.5.23",
+    "tar": "7.5.22",
+    "yaml": "2.9.0"
+  },
+  "overrides": {
+    "qs": "6.16.0"
+  }
+}

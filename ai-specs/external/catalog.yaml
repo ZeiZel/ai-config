@@ -1,0 +1,115 @@
+schemaVersion: 1
+policy:
+  sourceMustBeImmutable: true
+  requireSha256: true
+  requireLicense: true
+  telemetryOptOut: [DO_NOT_TRACK=1, DISABLE_TELEMETRY=1]
+  installMode: staging-then-atomic-publish
+sources:
+  - id: superpowers-core
+    repository: https://github.com/obra/superpowers
+    ref: v6.3.0
+    resolvedCommit: b36e0829c6d0140e93cfef2ca599b1b07d4a7797
+    archive: https://github.com/obra/superpowers/archive/refs/tags/v6.3.0.tar.gz
+    sha256: 2933703111f44dd1ae0234372cd2a924afb372a682fe3d9acdb6497231213fcb
+    license: MIT
+    skillPath: skills
+    archiveLayout: subtree
+    approvalRequired: false
+    risk: low
+    installer: skills-cli
+    review: 2026-09-03-public-source-review
+    enabled: true
+    capabilities: [workflow, planning, tdd, multiagent]
+    profiles: [base]
+    gate: Native provider plugins are separate; this entry installs portable skills only.
+  - id: archify
+    repository: https://github.com/tt-a1i/archify
+    ref: v2.16.0
+    resolvedCommit: c826e6c3a7abad19c0f3cd1ca57207d54b1ad8de
+    archive: https://github.com/tt-a1i/archify/archive/refs/tags/v2.16.0.tar.gz
+    sha256: c9f285502fed5ed3e8fbe247c5431972a119ce8ba3c434bf018f15d6496316f6
+    license: MIT
+    skillPath: archify
+    archiveLayout: subtree
+    approvalRequired: false
+    risk: low
+    installer: skills-cli
+    review: 2026-09-03-public-source-review
+    enabled: true
+    capabilities: [architecture, diagrams]
+    profiles: [architecture, systems]
+    gate: Restrict output paths and review scripts before enabling.
+  - id: frontend-react-best-practices
+    repository: https://github.com/vercel-labs/agent-skills
+    ref: agent-skills-063bee94c3f4df8453406c830b0a7df0f2860278
+    resolvedCommit: 063bee94c3f4df8453406c830b0a7df0f2860278
+    archive: https://github.com/vercel-labs/agent-skills/releases/download/agent-skills-063bee94c3f4df8453406c830b0a7df0f2860278/vercel-react-best-practices.tar.gz
+    sha256: 551e671112c393bec0b4a8551badb9bf3f63187e57a901a4e1b6b932bdffe995
+    license: MIT
+    selectedSkills: [vercel-react-best-practices]
+    skillPath: ''
+    archiveLayout: flat
+    approvalRequired: false
+    risk: low
+    installer: skills-cli
+    review: 2026-09-03-public-release-asset-review
+    enabled: true
+    capabilities: [frontend]
+    profiles: [frontend]
+  - id: frontend-composition-patterns
+    repository: https://github.com/vercel-labs/agent-skills
+    ref: agent-skills-063bee94c3f4df8453406c830b0a7df0f2860278
+    resolvedCommit: 063bee94c3f4df8453406c830b0a7df0f2860278
+    archive: https://github.com/vercel-labs/agent-skills/releases/download/agent-skills-063bee94c3f4df8453406c830b0a7df0f2860278/vercel-composition-patterns.tar.gz
+    sha256: 0af47b94aa0ff20a60a1629cfb6b29db3ab47dfa781873ef08193a2da57932c7
+    license: MIT
+    selectedSkills: [vercel-composition-patterns]
+    skillPath: ''
+    archiveLayout: flat
+    approvalRequired: false
+    risk: low
+    installer: skills-cli
+    review: 2026-09-03-public-release-asset-review
+    enabled: true
+    capabilities: [frontend]
+    profiles: [frontend]
+  - id: backend-curated
+    repository: https://github.com/magnus919/agent-skills
+    ref: v0.7.0
+    resolvedCommit: f21eeeda04bd3ee61bfcc09986a7e61ed55e99d6
+    archive: https://github.com/magnus919/agent-skills/archive/refs/tags/v0.7.0.tar.gz
+    sha256: 4f23dd3152f83351ffb92f952a5378d7a81b7311b4e81196efca30bc48be26f0
+    license: MIT
+    selectedSkills: [backend-engineering]
+    skillPath: ''
+    archiveLayout: subtree
+    approvalRequired: false
+    risk: low
+    installer: skills-cli
+    review: 2026-09-03-public-source-review
+    enabled: true
+    capabilities: [backend]
+    profiles: [backend]
+  - id: unity-curated
+    repository: https://github.com/Unity-Technologies/skills
+    ref: 87fac23d66a1f44f5e06c2935eccce0b40b9715a
+    resolvedCommit: 87fac23d66a1f44f5e06c2935eccce0b40b9715a
+    archive: https://github.com/Unity-Technologies/skills/archive/87fac23d66a1f44f5e06c2935eccce0b40b9715a.tar.gz
+    sha256: 3540562336e7032686f609163899db0132d481ac1f40a172d1743e59db3174c3
+    license: Unity Companion License 1.4
+    selectedSkills: [unity-cli, unity-package-management, new-unity-project]
+    skillPath: skills
+    archiveLayout: subtree
+    licenseEvidence:
+      path: LICENSE.md
+      sha256: 3aa49b3ed3521563a08c0d9d9327ef8bcee75efe92137c572a4f2216f8f641df
+      provenance: https://github.com/Unity-Technologies/skills/blob/87fac23d66a1f44f5e06c2935eccce0b40b9715a/LICENSE.md
+      artifactPath: .ai-config/licenses/unity-companion-license-1.4.md
+    approvalRequired: true
+    risk: high
+    installer: skills-cli
+    review: 2026-09-03-public-source-review
+    enabled: true
+    capabilities: [unity]
+    profiles: [unity]

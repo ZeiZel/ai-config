@@ -1,0 +1,7 @@
+schemaVersion: 1
+id: unity
+description: Unity profile with three reviewed skills and an explicit high-risk approval gate.
+extends: [base]
+external: [unity-curated]
+mcp: [context7]
+gate: explicit-license-and-source-approval-required

@@ -1,0 +1,5 @@
+schemaVersion: 1
+id: backend
+description: Backend profile with the reviewed backend-engineering subtree only.
+extends: [base]
+external: [backend-curated]

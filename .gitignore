@@ -57,3 +57,11 @@ logs/
 *.db
 .beads-credential-key
 .beads/proxieddb/
+# Bun dependencies are local build inputs, never generated repository state.
+node_modules/
+.bun/
+.ai-config-install.lock
+.ai-config-node-modules.recovery
+.ai-config-node_modules.previous
+.ai-config-install.*
+.ai-config-dry.*

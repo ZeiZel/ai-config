@@ -1,0 +1,36 @@
+schemaVersion: 1
+profiles:
+  - id: default
+    description: Public documentation only; no host mutation.
+    servers: [context7]
+    approvals: []
+
+  - id: browser-isolated
+    description: Browser automation with isolated profiles and explicit approval.
+    servers: [context7, playwright, chrome-devtools]
+    approvals: [playwright, chrome-devtools]
+
+  - id: youtrack-read
+    description: Private tracker reads without mutation tools.
+    servers: [context7, youtrack-read]
+    approvals: [youtrack-read]
+
+  - id: youtrack-write-approved
+    description: YouTrack write tools for a separately approved task.
+    servers: [youtrack-read, youtrack-write]
+    approvals: [youtrack-read, youtrack-write]
+
+  - id: desktop-task-only
+    description: Time-bounded access to a dedicated computer-use desktop.
+    servers: [cua-driver]
+    approvals: [cua-driver]
+
+  - id: obsidian-read
+    description: Read-only access to one explicitly selected Obsidian vault.
+    servers: [obsidian-safe]
+    approvals: [obsidian-safe]
+
+  - id: docker-sandbox
+    description: Curated digest-pinned MCP containers through Docker Gateway.
+    servers: [docker-gateway]
+    approvals: [docker-gateway]

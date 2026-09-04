@@ -1,0 +1,252 @@
+schemaVersion: 1
+policy:
+  defaultDeny: true
+  inheritProcessEnvironment: false
+  requireExplicitOptInAtRisk: high
+servers:
+  - id: context7
+    description: Public library documentation through the Upstash Context7 service.
+    transport: streamable-http
+    url: https://mcp.context7.com/mcp
+    risk: medium
+    optIn: false
+    mutating: false
+    envAllowlist: [CONTEXT7_API_KEY]
+    requiredEnv: []
+    dataBoundary: external-public-queries-only
+    source:
+      repository: https://github.com/upstash/context7
+      version: "2.1.6"
+      license: MIT
+
+  - id: playwright
+    description: Isolated browser automation using Microsoft's Playwright MCP server.
+    transport: stdio
+    risk: high
+    optIn: true
+    mutating: true
+    envAllowlist: [PATH, HOME, PLAYWRIGHT_BROWSERS_PATH]
+    requiredEnv: [PATH]
+    dataBoundary: isolated-browser-profile
+    sessionPolicy:
+      persistent: false
+      maxSessionMinutes: 30
+    timeouts:
+      startupSeconds: 10
+      toolSeconds: 30
+    source:
+      repository: https://github.com/microsoft/playwright-mcp
+      version: "0.0.80"
+      license: Apache-2.0
+    runtimeIntegrity:
+      status: lockfile-install-direct-package-content-verified
+      immutable: false
+      note: Bun lock SRI, installed package version, complete direct package content tree, and binary realpath are verified at launch; transitive dependency closure hashes are not yet content-addressed.
+    runtime:
+      package: "@playwright/mcp"
+      version: "0.0.80"
+      integrity: "sha512-FOPXHm2SvFhAQylm10jMZ35B/SR2TaMLVkavAlwoG4N2qCb5RqbvhQYcu3zmXNyxR2DW0Ooxe+9XPVt5UjKRCQ=="
+      treeSha256: fa1405bacb2a3114536971ed61ac88815c0153a3a4bbd52559e7b120a068efb9
+      bin: playwright-mcp
+      binPath: cli.js
+      args: [--isolated, --block-service-workers]
+
+  - id: chrome-devtools
+    description: Chrome debugging and performance inspection in a dedicated profile.
+    transport: stdio
+    risk: high
+    optIn: true
+    mutating: true
+    envAllowlist: [PATH, HOME, CHROME_PATH]
+    requiredEnv: [PATH]
+    dataBoundary: isolated-chrome-profile
+    sessionPolicy:
+      persistent: false
+      maxSessionMinutes: 30
+    timeouts:
+      startupSeconds: 10
+      toolSeconds: 30
+    source:
+      repository: https://github.com/ChromeDevTools/chrome-devtools-mcp
+      version: "1.7.0"
+      license: Apache-2.0
+    runtimeIntegrity:
+      status: lockfile-install-direct-package-content-verified
+      immutable: false
+      note: Bun lock SRI, installed package version, complete direct package content tree, and binary realpath are verified at launch; transitive dependency closure hashes are not yet content-addressed.
+    runtime:
+      package: chrome-devtools-mcp
+      version: "1.7.0"
+      integrity: "sha512-6xFW7oiUxTxZuHcfyYBkKQtmttjCbfifKZMSEk5CV8H2FucvKweYiJr8CblddYHtYjA4C14K9VAs1r49906RBA=="
+      treeSha256: 63e46ad373238be1de198f8fe41a65a8c6d9e1ac80f7d534c03d89b89737552e
+      bin: chrome-devtools-mcp
+      binPath: build/src/bin/chrome-devtools-mcp.js
+      args: [--isolated, --no-usage-statistics, --no-performance-crux, --redact-network-headers]
+
+  - id: youtrack-read
+    description: Read-only YouTrack issue and article access through the built-in MCP endpoint.
+    transport: streamable-http
+    urlTemplate: "${YOUTRACK_BASE_URL}/mcp"
+    risk: medium
+    optIn: true
+    mutating: false
+    envAllowlist: [YOUTRACK_BASE_URL]
+    requiredEnv: [YOUTRACK_BASE_URL]
+    toolAllowlist:
+      - search_issues
+      - get_issue_fields_schema
+      - get_issue
+      - get_issue_comments
+      - search_articles
+      - get_article
+      - find_projects
+      - get_project
+      - get_current_user
+    enforceToolsInUrl: true
+    sessionPolicy:
+      persistent: false
+      maxSessionMinutes: 15
+    timeouts:
+      startupSeconds: 10
+      toolSeconds: 30
+    dataBoundary: private-work-tracker
+    source:
+      documentation: https://www.jetbrains.com/help/youtrack/server/model-context-protocol-server.html
+      version: "2026.2"
+      license: proprietary
+    runtimeIntegrity:
+      status: lockfile-install-direct-package-content-verified
+      immutable: false
+      note: The bundled mcp-remote bridge lock SRI, installed version, complete direct package content tree, and binary realpath are verified at launch; transitive dependency closure and the remote YouTrack service remain independently administered.
+    runtime:
+      package: mcp-remote
+      version: "0.8.3"
+      integrity: "sha512-oEwD8z8DfRjpYm5a9X3spxuESBMoQ2ph3AiiSUQGD2OoBsWewWZsjAb93MsS8/T5e4P0p2gOW7IBw0znEUSlOg=="
+      treeSha256: 072da58f73e64f4e2ee0755bab11cac2c4dcfe942cef3fce981afa88e6a49c1b
+      bin: mcp-remote
+      binPath: dist/proxy.js
+
+  - id: youtrack-write
+    description: Explicitly approved YouTrack mutation tools; never part of a default profile.
+    transport: streamable-http
+    urlTemplate: "${YOUTRACK_BASE_URL}/mcp"
+    risk: critical
+    optIn: true
+    mutating: true
+    envAllowlist: [YOUTRACK_BASE_URL]
+    requiredEnv: [YOUTRACK_BASE_URL]
+    toolAllowlist:
+      - create_issue
+      - create_draft_issue
+      - update_issue
+      - change_issue_assignee
+      - add_issue_comment
+      - link_issues
+      - manage_issue_tags
+      - create_article
+      - update_article
+      - log_work
+    enforceToolsInUrl: true
+    sessionPolicy:
+      persistent: false
+      maxSessionMinutes: 15
+    timeouts:
+      startupSeconds: 10
+      toolSeconds: 30
+    dataBoundary: private-work-tracker-write
+    source:
+      documentation: https://www.jetbrains.com/help/youtrack/server/model-context-protocol-server.html
+      version: "2026.2"
+      license: proprietary
+    runtimeIntegrity:
+      status: lockfile-install-direct-package-content-verified
+      immutable: false
+      note: The bundled mcp-remote bridge lock SRI, installed version, complete direct package content tree, and binary realpath are verified at launch; transitive dependency closure and the remote YouTrack service remain independently administered.
+    runtime:
+      package: mcp-remote
+      version: "0.8.3"
+      integrity: "sha512-oEwD8z8DfRjpYm5a9X3spxuESBMoQ2ph3AiiSUQGD2OoBsWewWZsjAb93MsS8/T5e4P0p2gOW7IBw0znEUSlOg=="
+      treeSha256: 072da58f73e64f4e2ee0755bab11cac2c4dcfe942cef3fce981afa88e6a49c1b
+      bin: mcp-remote
+      binPath: dist/proxy.js
+
+  - id: cua-driver
+    description: Bounded computer-use session through Cua Driver.
+    transport: stdio
+    risk: critical
+    optIn: true
+    mutating: true
+    envAllowlist: [PATH, HOME, TMPDIR]
+    requiredEnv: [PATH]
+    sessionPolicy:
+      persistent: false
+      maxSessionMinutes: 30
+      requireDedicatedDesktop: true
+      denyCredentialWindows: true
+    dataBoundary: real-desktop
+    source:
+      repository: https://github.com/trycua/cua
+      version: "0.23.2"
+      license: MIT
+    runtimeIntegrity:
+      status: unavailable
+      gate: Select only after a separately started private socket proves a hash-pinned bounded capability manifest with explicit manifest approval.
+    runtime:
+      availability: unavailable
+
+  - id: obsidian-safe
+    description: Local read-only wrapper around the official Obsidian CLI.
+    transport: stdio
+    risk: high
+    optIn: true
+    mutating: false
+    envAllowlist: [PATH, HOME, OBSIDIAN_VAULT, OBSIDIAN_VAULT_ROOT]
+    requiredEnv: [PATH, OBSIDIAN_VAULT, OBSIDIAN_VAULT_ROOT]
+    toolAllowlist: [obsidian_read]
+    dataBoundary: allowlisted-local-vault
+    sessionPolicy:
+      persistent: false
+      maxSessionMinutes: 15
+    timeouts:
+      startupSeconds: 10
+      toolSeconds: 15
+    source:
+      documentation: https://obsidian.md/help/cli
+      version: ">=1.12.7"
+      license: proprietary
+    runtimeIntegrity:
+      status: external-cli-and-vault-verified
+      immutable: false
+      note: The runner verifies the documented platform CLI registration path, minimum CLI version, and exact canonical vault identity before each launch; external application provenance remains a host prerequisite.
+    runtime:
+      wrapper: src/mcp/obsidian-safe-wrapper.js
+
+  - id: docker-gateway
+    description: Docker MCP Gateway execution plane for digest-pinned containerized servers.
+    transport: stdio
+    risk: high
+    optIn: true
+    mutating: true
+    envAllowlist: [PATH, HOME, DOCKER_HOST, DOCKER_CONTEXT]
+    requiredEnv: [PATH]
+    dataBoundary: docker-gateway
+    sessionPolicy:
+      persistent: false
+      maxSessionMinutes: 30
+    timeouts:
+      startupSeconds: 10
+      toolSeconds: 30
+    source:
+      repository: https://github.com/docker/mcp-gateway
+      version: "0.43.1"
+      license: MIT
+    runtimeIntegrity:
+      status: unavailable
+      gate: Select only after an ai-config-owned digest-pinned gateway profile and every image hash are verified against an exact supported gateway identity.
+    runtime:
+      availability: unavailable
+
+  # Raw Vault MCP is intentionally absent. Its read_secret operation returns
+  # secret values to the MCP client/LLM even when privileged operations are
+  # disabled. The supported contract is a separately configured trusted host
+  # helper, with security hooks blocking raw Vault reads.

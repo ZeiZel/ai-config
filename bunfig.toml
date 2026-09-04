@@ -1,0 +1,9 @@
+# Repository-wide deterministic Bun policy.
+env = false
+telemetry = false
+
+[install]
+auto = "disable"
+linker = "hoisted"
+frozenLockfile = true
+ignoreScripts = true

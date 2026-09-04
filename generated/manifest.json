@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": ".agents/skills/beads/SKILL.md",
+      "sha256": "c460b67ad97720fe42efe244ef3157d93ca515f23675bccecbf841c26e4ffee7"
+    },
+    {
+      "path": ".agents/skills/hashicorp-vault/SKILL.md",
+      "sha256": "7af2d0d40e16fbad7354ba7b32a1fd2777deda18133a5f30baaa912a4e0e9069"
+    },
+    {
+      "path": ".agents/skills/project-init/SKILL.md",
+      "sha256": "47c16eddcb9b804122f361125b876c284827d8fe0375fb83063c54bf949e607c"
+    },
+    {
+      "path": ".agents/skills/security/SKILL.md",
+      "sha256": "517be3fd52752ba18455de151899998540c575710b2094f041cfb71831a986f5"
+    },
+    {
+      "path": ".claude/skills/beads/SKILL.md",
+      "sha256": "c460b67ad97720fe42efe244ef3157d93ca515f23675bccecbf841c26e4ffee7"
+    },
+    {
+      "path": ".claude/skills/hashicorp-vault/SKILL.md",
+      "sha256": "7af2d0d40e16fbad7354ba7b32a1fd2777deda18133a5f30baaa912a4e0e9069"
+    },
+    {
+      "path": ".claude/skills/project-init/SKILL.md",
+      "sha256": "47c16eddcb9b804122f361125b876c284827d8fe0375fb83063c54bf949e607c"
+    },
+    {
+      "path": ".claude/skills/security/SKILL.md",
+      "sha256": "517be3fd52752ba18455de151899998540c575710b2094f041cfb71831a986f5"
+    },
+    {
+      "path": ".gemini/skills/beads/SKILL.md",
+      "sha256": "c460b67ad97720fe42efe244ef3157d93ca515f23675bccecbf841c26e4ffee7"
+    },
+    {
+      "path": ".gemini/skills/hashicorp-vault/SKILL.md",
+      "sha256": "7af2d0d40e16fbad7354ba7b32a1fd2777deda18133a5f30baaa912a4e0e9069"
+    },
+    {
+      "path": ".gemini/skills/project-init/SKILL.md",
+      "sha256": "47c16eddcb9b804122f361125b876c284827d8fe0375fb83063c54bf949e607c"
+    },
+    {
+      "path": ".gemini/skills/security/SKILL.md",
+      "sha256": "517be3fd52752ba18455de151899998540c575710b2094f041cfb71831a986f5"
+    },
+    {
+      "path": ".opencode/skills/beads/SKILL.md",
+      "sha256": "c460b67ad97720fe42efe244ef3157d93ca515f23675bccecbf841c26e4ffee7"
+    },
+    {
+      "path": ".opencode/skills/hashicorp-vault/SKILL.md",
+      "sha256": "7af2d0d40e16fbad7354ba7b32a1fd2777deda18133a5f30baaa912a4e0e9069"
+    },
+    {
+      "path": ".opencode/skills/project-init/SKILL.md",
+      "sha256": "47c16eddcb9b804122f361125b876c284827d8fe0375fb83063c54bf949e607c"
+    },
+    {
+      "path": ".opencode/skills/security/SKILL.md",
+      "sha256": "517be3fd52752ba18455de151899998540c575710b2094f041cfb71831a986f5"
+    }
+  ]
+}

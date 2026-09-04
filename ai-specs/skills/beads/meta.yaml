@@ -1,0 +1,16 @@
+schemaVersion: 1
+id: beads
+name: Beads project memory and task tracking
+description: Use global Beads memory and a local Beads database for durable project work.
+license: MIT
+compatibility: Agent Skills compatible providers
+providers: [claude, codex, opencode, gemini]
+triggers: [start of work, task tracking, context recovery, handoff]
+requires: []
+capabilities:
+  filesystem: [read-project, write-project-beads]
+  network: []
+  secrets: none
+provenance:
+  kind: authored
+  source: ai-config
